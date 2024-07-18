@@ -1,7 +1,5 @@
-import logging
-
 import requests
-# import logging
+import logging
 import json
 import urllib.parse
 from selenium import webdriver
@@ -48,7 +46,7 @@ def lambda_handler():
                 else:
                     break
             except Exception as e:
-                print("No more '더보기' button or error occurred:", e)
+                # print("No more '더보기' button or error occurred:", e)
                 try:
                     alert = Alert(driver)
                     alert.accept()
@@ -74,7 +72,7 @@ def lambda_handler():
                 urls.append(product_url)
 
             except Exception as e:
-                print(f"[{i}] Error processing item: {e}")
+                logging.info(f"[{i}] Error processing item: {e}")
 
         # 상세URL 데이터 꺼내기
         driver = webdriver.Edge(service=service, options=options)
@@ -166,10 +164,10 @@ def lambda_handler():
                 })
 
             except Exception as e:
-                print(f"[{i}] Error processing item: {e}")
+                logging.info(f"[{i}] Error processing item: {e}")
 
     except Exception as e:
-        print(f"Failed to set up WebDriver: {e}")
+        logging.info(f"Failed to set up WebDriver: {e}")
     finally:
         driver.quit()
 
@@ -190,9 +188,10 @@ def lambda_handler():
     fail_count = len(failed)
     if fail_count > 0:
         for e in failed:
-            print(e['index']['error'])
+            logging.info(e['index']['error'])
 
-    print(f"성공 {success}건\n실패 {fail_count}건\n{failed}")
+    # 확인용 코드
+    # print(f"성공 {success}건\n실패 {fail_count}건\n{failed}")
 
 
     # 슬렉 알림보내기
@@ -203,9 +202,8 @@ def lambda_handler():
     }
     response = requests.post(slack_config['url'], headers=headers, json=noti)
     if response.status_code != 200:
-        print(f"Failed to send Slack notification. Status code: {response.status_code}, Response: {response.text}")
-    else:
-        print("Slack notification sent successfully.")
+        logging.info(f"Failed to send Slack notification. Status code: {
+                     response.status_code}, Response: {response.text}")
 
 
 if __name__ == "__main__":
