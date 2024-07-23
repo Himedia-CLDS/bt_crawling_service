@@ -16,21 +16,30 @@ import re
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger("test")
 
-def lambda_handler():
+def crawling_main():
 
+    logging.info("START crawling_main()")
     # 크롤링할 브라우저
     options = Options()
     options.headless = True  # Rambda에서는 GUI를 지원하지 않음
+    # webdriver 로그뺴기
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
     service = Service(EdgeChromiumDriverManager().install())
+
+    # security.json 파일열기
+    with open('security.json', 'r') as security:
+        config = json.load(security)
 
     try:
         # 브라우저 열기
         driver = webdriver.Edge(service=service, options=options)
 
         # 크롤링할 URL
-        url = 'https://m.kihya.com/goods/goods_list.php?cateCd=010'
-        driver.get(url)
+        kihay = config["kihay"]
+        driver.get(kihay["url"])
 
         # 페이지 로드 대기 (필요 시 explicit wait을 사용)
         driver.implicitly_wait(10)
@@ -62,7 +71,7 @@ def lambda_handler():
 
         # 상세정보URL가져오기
         for i, item in enumerate(items):
-            if i >= 25:
+            if i >= 10:
                 break
             try:
                 url_element = item.find_element(By.CSS_SELECTOR, 'a')
@@ -81,7 +90,8 @@ def lambda_handler():
         for i, url in enumerate(urls):
             try:
                 driver.get(url)
-                driver.implicitly_wait(20)
+                WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.ID, 'product_name')))
 
                 ko_name_element = driver.find_element(By.ID, 'product_name')
                 en_name_element = driver.find_element(
@@ -157,11 +167,18 @@ def lambda_handler():
                         "finish": finish
                     }
                 }
-                products.append({
-                    "_index": "bulk_api_test",
-                    "_id": products_id,
-                    "_source": product
-                })
+                if(i == 2 or i == 8) : 
+                    products.append({
+                        "_index": "#$$%&#^@*$",
+                        "_id": products_id,
+                        "_source": product
+                    })
+                else:
+                    products.append({
+                        "_index": "bulk_api_test",
+                        "_id": products_id,
+                        "_source": product
+                    })
 
             except Exception as e:
                 logging.info(f"[{i}] Error processing item: {e}")
@@ -171,8 +188,7 @@ def lambda_handler():
     finally:
         driver.quit()
 
-    with open('security.json', 'r') as security:
-        config = json.load(security)
+
 
     # Elasticsearch 설정
     es_config = config['es']
@@ -183,29 +199,100 @@ def lambda_handler():
         http_auth=(es_config['username'], es_config['password'])
     )
 
-    # Bulk API를 사용하여 데이터 전송
-    success, failed = bulk(es, products)
-    fail_count = len(failed)
-    if fail_count > 0:
-        for e in failed:
-            logging.info(e['index']['error'])
+    # 실패정보 받을 수 있는지 ###############
+    # 실패데이터를 뽑을 수 있는지 ###########
+    # 넣은데이터보다 적제되는데이터가 적음 insert, delete 확인해보기
+    # 넣는데이터 로그남겨서 ES랑 비교하기
 
-    # 확인용 코드
-    # print(f"성공 {success}건\n실패 {fail_count}건\n{failed}")
+    ##### Bulk API를 사용하여 데이터 전송 #####
+    fail_count = 0
+    re_fail_count = 0
 
+    errors = []
+    retry_products = []
+    retry = 0
+
+    # 슬렉
+    slack_config = config['slack']
+    noti = {}
+
+    try:
+        # 첫데이터 집어넣기
+        success, responses = bulk(es, products, raise_on_error=False)
+        for response in responses:
+            if 'index' in response and response['index']['status'] >= 300:
+                fail_count += 1
+                errors.append(response)
+
+        # 실패한 데이터를 fail_test_data 인덱스에 저장
+        if fail_count > 0:
+            fail_data = []
+            for error in errors:
+                for product in products:
+                    if product['_id'] == error['index']['_id']:
+                        fail_data.append({
+                            "_index": "fail_test_data",
+                            "_id": product['_id'],
+                            "_source": product.get('_source')
+                        })
+
+            # 실패 데이터를 fail_test_data 인덱스에 저장
+            bulk(es, fail_data, raise_on_error=False)
+
+        # 재도전
+        while retry < 3:
+            # 실패데이터 없으면 종료
+            if fail_count == 0:
+                break
+
+            retry += 1
+            retry_products = []
+            for error in errors:
+                for product in products:
+                    if product['_id'] == error['index']['_id']:
+                        retry_products.append({
+                            "_index": "bulk_api_test",
+                            "_id": product['_id'],
+                            "_source": product.get('_source')
+                        })
+
+            # 실패 데이터를 다시 기존 인덱스에 저장
+            re_success, re_responses = bulk(es, retry_products, raise_on_error=False)
+            re_fail_count = 0  # 재실패 카운트 초기화
+            errors = []  # errors 초기화
+
+            for response in re_responses:
+                if 'index' in response and response['index']['status'] >= 300:
+                    re_fail_count += 1
+                    errors.append(response)
+
+            if re_fail_count == 0:
+                break
+
+        noti = {
+            "channel": "#crawling-kihay",
+            "text": f"성공 {success}건\n실패 {fail_count}건\n재시도 {retry}\n재시도 성공 {re_success}\n재시도 실패 {re_fail_count}"
+        }
+
+
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
+        fail_count = len(e.errors)
+        noti = {
+            "channel": "#crawling-kihay",
+            "text": f"Error 크롤링 중단({fail_count})\n{e}"
+        }
+        for error in e.errors:
+            logging.error(error)
+
+    print(noti.get("text"))
 
     # 슬렉 알림보내기
-    slack_config = config['slack']
-    noti = {
-        "channel": "#crawling-kihay",
-        "text": f"성공 {success}건\n실패 {fail_count}건\n{failed}"
-    }
-    response = requests.post(slack_config['url'], headers=headers, json=noti)
-    if response.status_code != 200:
-        logging.info(f"Failed to send Slack notification. Status code: {
-                     response.status_code}, Response: {response.text}")
+    # response = requests.post(slack_config['url'], headers=headers, json=noti)
+    # if response.status_code != 200:
+    #     logging.info(f"Failed to send Slack notification. Status code: {response.status_code}, Response: {response.text}")
 
 
 if __name__ == "__main__":
-    lambda_handler()
+    crawling_main()
 
