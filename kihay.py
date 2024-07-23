@@ -29,10 +29,10 @@ def crawling_main():
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     service = Service(EdgeChromiumDriverManager().install())
 
+
     # security.json 파일열기
     with open('security.json', 'r') as security:
         config = json.load(security)
-
     try:
         # 브라우저 열기
         driver = webdriver.Edge(service=service, options=options)
@@ -79,7 +79,7 @@ def crawling_main():
                     'href') if url_element else 'No URL'
 
                 urls.append(product_url)
-
+                
             except Exception as e:
                 logging.info(f"[{i}] Error processing item: {e}")
 
@@ -87,39 +87,55 @@ def crawling_main():
         driver = webdriver.Edge(service=service, options=options)
         in_items = driver.find_elements(By.CSS_SELECTOR, 'div.img_box')
 
+
         for i, url in enumerate(urls):
             try:
+                print(f">>>>>>>>>>>>>>>>>>>>>>>>>진행중URL: {url}")
                 driver.get(url)
                 WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located((By.ID, 'product_name')))
-
+                
                 ko_name_element = driver.find_element(By.ID, 'product_name')
+
                 en_name_element = driver.find_element(
                     By.ID, 'product_englishname')
+
                 price_div_element = driver.find_element(
                     By.CSS_SELECTOR, 'div.price_box')
+
                 price_element = price_div_element.find_element(
                     By.CSS_SELECTOR, 'div')
+
                 img_element = driver.find_element(
                     By.CSS_SELECTOR, 'img.middle')
+
                 categori_element = driver.find_element(
                     By.XPATH, ".//li[span[contains(text(),'종류')]]")
+
                 alcohol_element = driver.find_element(
                     By.XPATH, ".//li[span[contains(text(),'도수')]]")
+
                 country_element = driver.find_element(
                     By.XPATH, ".//li[span[contains(text(),'국가')]]")
+
                 capacity_element = driver.find_element(
                     By.XPATH, ".//li[span[contains(text(),'용량')]]")
-                h3_element = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.ID, '-')))
-                p_element = h3_element.find_element(
+
+                h2_element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.ID, 'md-s-comment')))
+
+                p_element = h2_element.find_element(
                     By.XPATH, 'following-sibling::p')
+
                 aroma_element = driver.find_element(
                     By.XPATH, ".//li[span[contains(text(),'Aroma')]]")
+
                 taste_element = driver.find_element(
                     By.XPATH, ".//li[span[contains(text(),'Taste')]]")
+
                 finish_element = driver.find_element(
                     By.XPATH, ".//li[span[contains(text(),'Finish')]]")
+
 
                 ko_name = ko_name_element.text.strip() if ko_name_element else 'No name'
                 en_name = en_name_element.text.strip() if en_name_element else 'No name'
@@ -134,14 +150,15 @@ def crawling_main():
                     '국가', '') if country_element else 'No dosage'
                 capacity = capacity_element.text.replace(
                     '용량', '') if capacity_element else 'No dosage'
-                description = h3_element.text.strip() + " " + \
-                    p_element.text.strip() if h3_element and p_element else 'No description'
+                description = h2_element.text.strip() + " " + \
+                    p_element.text.strip() if h2_element and p_element else 'No description'
                 aroma = aroma_element.text.replace(
                     'Aroma', '') if aroma_element else 'No dosag'
                 taste = taste_element.text.replace(
                     'Taste', '') if taste_element else 'No dosag'
                 finish = finish_element.text.replace(
                     'Finish', '') if finish_element else 'No dosag'
+
 
                 # url로 id 얻어오기
                 parsed_url = urllib.parse.urlparse(url)
@@ -233,7 +250,7 @@ def crawling_main():
                         fail_data.append({
                             "_index": "fail_test_data",
                             "_id": product['_id'],
-                            "_source": product.get('_source')
+                            "_source": product['_source']
                         })
 
             # 실패 데이터를 fail_test_data 인덱스에 저장
@@ -253,7 +270,7 @@ def crawling_main():
                         retry_products.append({
                             "_index": "bulk_api_test",
                             "_id": product['_id'],
-                            "_source": product.get('_source')
+                            "_source": product['_source']
                         })
 
             # 실패 데이터를 다시 기존 인덱스에 저장
@@ -270,7 +287,7 @@ def crawling_main():
                 break
 
         noti = {
-            "channel": "#crawling-kihay",
+            "channel": kihay["channel"],
             "text": f"성공 {success}건\n실패 {fail_count}건\n재시도 {retry}\n재시도 성공 {re_success}\n재시도 실패 {re_fail_count}"
         }
 
@@ -279,7 +296,7 @@ def crawling_main():
         logging.error(f"An unexpected error occurred: {e}")
         fail_count = len(e.errors)
         noti = {
-            "channel": "#crawling-kihay",
+            "channel": kihay["channel"],
             "text": f"Error 크롤링 중단({fail_count})\n{e}"
         }
         for error in e.errors:
