@@ -8,7 +8,6 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import re
@@ -34,10 +33,14 @@ options.add_experimental_option(
 service = Service(EdgeChromiumDriverManager().install())
 
 headers = {'Content-Type': 'application/json'}
+slack_config = config['slack']
 
 def crawling_main():
-
-    logging.info("START crawling_main()")
+    noti = {
+        "channel": slack_config["channel"],
+        "text": "** 크롤링 시작 **"
+    }
+    slack(noti)
 
     try:
         driver = webdriver.Edge(service=service, options=options)
@@ -76,6 +79,7 @@ def crawling_main():
         for i, url in enumerate(urls):
             try:
                 driver.get(url)
+                driver.implicitly_wait(10)
                 
                 # 요소찾기
                 ko_name_element = driver.find_element(By.ID, 'product_name')
@@ -87,7 +91,7 @@ def crawling_main():
                 alcohol_element = driver.find_element(By.XPATH, ".//li[span[contains(text(),'도수')]]")
                 country_element = driver.find_element(By.XPATH, ".//li[span[contains(text(),'국가')]]")
                 capacity_element = driver.find_element(By.XPATH, ".//li[span[contains(text(),'용량')]]")
-                h2_element = driver.find_element((By.ID, 'md-s-comment'))
+                h2_element = driver.find_element(By.ID, 'md-s-comment')
                 p_element = h2_element.find_element(By.XPATH, 'following-sibling::p')
                 aroma_element = driver.find_element(By.XPATH, ".//li[span[contains(text(),'Aroma')]]")
                 taste_element = driver.find_element(By.XPATH, ".//li[span[contains(text(),'Taste')]]")
@@ -99,6 +103,8 @@ def crawling_main():
                 price = price_element.text.strip() if price_element else 'No price'
                 img_src = img_element.get_attribute('src') if img_element else 'No image'
                 category = categori_element.text.replace('종류', '') if categori_element else 'No dosage'
+                print(f"category: {category}({type(category)})")
+                
                 if "위스키" in category.lower():
                     alcohol = alcohol_element.text.replace('도수', '') if alcohol_element else 'No dosage'
                     country = country_element.text.replace('국가', '') if country_element else 'No dosage'
@@ -134,18 +140,11 @@ def crawling_main():
                         "finish": finish
                     }
                 }
-                if i == 4 and i == 7 and i == 12:
-                    products.append({
-                        "_index": "bul$#$%$#",
-                        "_id": products_id,
-                        "_source": product
-                    })
-                else:
-                    products.append({
-                        "_index": "bulk_api_test",
-                        "_id": products_id,
-                        "_source": product
-                    })
+                products.append({
+                    "_index": "bulk_api_test",
+                    "_id": products_id,
+                    "_source": product
+                })
 
                 # n건당 크롤링 데이터적재알림
                 if i != 0 and i % 10 == 0:
@@ -153,7 +152,7 @@ def crawling_main():
                         "channel": kihay["channel"],
                         "text": f"크롤링 진행중 {i}건"
                     }
-                    slack(noti)
+                    # slack(noti)
 
             except Exception as e:
                 logging.info(f"[{i}] {products_id}")
@@ -179,7 +178,6 @@ def crawling_main():
 
     ##### Bulk API를 사용하여 데이터 전송 #####
     fail_count = 0
-    noti = {}
 
     try:
         # 첫데이터 집어넣기
@@ -222,13 +220,11 @@ def crawling_main():
             logging.error(error)
 
     print(noti.get("text"))
-    slack(noti)
+    # slack(noti)
 
 
 # 슬랙 알림보내기
 def slack(noti):
-    slack_config = config['slack']
-
     response = requests.post(slack_config['url'], headers=headers, json=noti)
     if response.status_code != 200:
         logging.info(f"Failed to send Slack notification. Status code: {response.status_code}, Response: {response.text}")
@@ -254,5 +250,6 @@ def moreBtn():
                 break
 
 if __name__ == "__main__":
+    
     crawling_main()
 

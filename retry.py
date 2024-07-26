@@ -14,13 +14,16 @@ with open('security.json', 'r') as security:
     config = json.load(security)
 
 headers = {'Content-Type': 'application/json'}
-
+slack_config = config['slack']
 
 def crawling_retry():
+    noti = {
+        "channel": slack_config["channel"],
+        "text": "** 실패데이터 재적재 시작 **"
+    }
+    slack(noti)
+    
     try:
-        logging.info("START crawling_retry()")
-        kihay_config = config['kihay']
-        noti = {}
 
         # 엘라스틱 정보
         es_config = config['es']
@@ -30,13 +33,12 @@ def crawling_retry():
         )
 
         noti = {
-            "channel": kihay_config["channel"],
+            "channel": slack_config["channel"],
             "text": "** 크롤링 재시도 **"
         }
 
         # fail_test_data 인덱스에 데이터가 없을때 까지 반복
         while True:
-            logging.info("===== ReTry Start =====")
 
             # search사용해서 인덱스의 모든데이터 불러오기
             query = {
@@ -46,13 +48,6 @@ def crawling_retry():
             }
             get_data = es.search(index=es_config['fail_index'], body=query)
             datas = get_data["hits"]["hits"]
-
-            if len(datas) == 0:
-                noti = {
-                    "channel": kihay_config["channel"],
-                    "text": "** 크롤링 재시도 알림 **\n데이터가 없습니다."
-                }
-                break
 
             # 인덱스 변경
             set_data = []
@@ -83,6 +78,13 @@ def crawling_retry():
                                     "_source": data["_source"]
                                 }
                                 get_data.append(temp)
+                        else:
+                            temp = {
+                                '_op_type': 'delete',
+                                "_index": es_config['fail_index'],
+                                "_id": response['index']['_id']
+                            }
+                            success_id.append(temp)
             else:
                 if len(get_data) == 0:
                     for data in set_data:
@@ -104,19 +106,28 @@ def crawling_retry():
 
             bulk(es, get_data, raise_on_error=False)
             bulk(es, success_id, raise_on_error=False)
+
+            if len(datas) == 0:
+                noti = {
+                    "channel": slack_config["channel"],
+                    "text": "** 크롤링 재시도 알림 **\n데이터가 없습니다."
+                }
+                break
+
             noti = {
-                "channel": kihay_config["channel"],
+                "channel": slack_config["channel"],
                 "text": "** 크롤링 재시도 알림 **\n크롤링 재시도 성공"
             }
 
-        slack(noti)
+        print(noti["text"])
+        # slack(noti)
 
     except NotFoundError:
         print(str(NotFoundError))
 
 
 def slack(noti):
-    slack_config = config['slack']
+    
     response = requests.post(slack_config['url'], headers=headers, json=noti)
     if response.status_code != 200:
         logging.info(f"Failed to send Slack notification. Status code: {
