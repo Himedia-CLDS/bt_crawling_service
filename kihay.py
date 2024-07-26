@@ -9,8 +9,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support import expected_conditions as EC
+from elasticsearch.exceptions import NotFoundError
 import time
 import re
+import schedule
 
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -35,6 +37,117 @@ service = Service(EdgeChromiumDriverManager().install())
 headers = {'Content-Type': 'application/json'}
 slack_config = config['slack']
 
+########## 실패데이터 재적재 ##########
+def crawling_retry():
+    noti = {
+        "channel": slack_config["channel"],
+        "text": "** 실패데이터 재적재 시작 **"
+    }
+    slack(noti)
+
+    try:
+
+        # 엘라스틱 정보
+        es_config = config['es']
+        es = Elasticsearch(
+            [es_config['es_url']],
+            http_auth=(es_config['username'], es_config['password'])
+        )
+
+        noti = {
+            "channel": slack_config["channel"],
+            "text": "** 크롤링 재시도 **"
+        }
+
+        # fail_test_data 인덱스에 데이터가 없을때 까지 반복
+        while True:
+
+            # search사용해서 인덱스의 모든데이터 불러오기
+            query = {
+                "query": {
+                    "match_all": {}
+                }
+            }
+            get_data = es.search(index=es_config['fail_index'], body=query)
+            datas = get_data["hits"]["hits"]
+
+            # 인덱스 변경
+            set_data = []
+            for hit in datas:
+                data = {
+                    "_op_type": "index",
+                    "_index": es_config['main_index'],
+                    "_id": hit["_id"],
+                    "_source": hit["_source"]
+                }
+                set_data.append(data)
+
+            # 데이터 전송
+            get_data = []
+            success_id = []
+            fail_count = 0
+            success, responses = bulk(es, set_data, raise_on_error=False)
+            if len(responses) > 0:
+                for data in datas:
+                    for response in responses:
+                        if 'index' in response and response['index']['status'] >= 300:
+                            fail_count += 1
+                            if data["_index"] == response['index']:
+                                temp = {
+                                    "_op_type": "index",
+                                    "_index": es_config['fail_index'],
+                                    "_id": data["_id"],
+                                    "_source": data["_source"]
+                                }
+                                get_data.append(temp)
+                        else:
+                            temp = {
+                                '_op_type': 'delete',
+                                "_index": es_config['fail_index'],
+                                "_id": response['index']['_id']
+                            }
+                            success_id.append(temp)
+            else:
+                if len(get_data) == 0:
+                    for data in set_data:
+                        temp = {
+                            '_op_type': 'delete',
+                            "_index": es_config['fail_index'],
+                            "_id": data["_id"]
+                        }
+                        success_id.append(temp)
+                else:
+                    for gdata, sdata in zip(get_data, set_data):
+                        if gdata["_id"] != sdata["_id"]:
+                            temp = {
+                                '_op_type': 'delete',
+                                "_index": es_config['fail_index'],
+                                "_id": sdata["_id"]
+                            }
+                        success_id.append(temp)
+
+            bulk(es, get_data, raise_on_error=False)
+            bulk(es, success_id, raise_on_error=False)
+
+            if len(datas) == 0:
+                noti = {
+                    "channel": slack_config["channel"],
+                    "text": "** 크롤링 재시도 알림 **\n데이터가 없습니다."
+                }
+                break
+
+            noti = {
+                "channel": slack_config["channel"],
+                "text": "** 크롤링 재시도 알림 **\n크롤링 재시도 성공"
+            }
+
+        print(noti["text"])
+        # slack(noti)
+
+    except NotFoundError:
+        print(str(NotFoundError))
+
+########## 크롤링 ##########
 def crawling_main():
     noti = {
         "channel": slack_config["channel"],
@@ -149,7 +262,7 @@ def crawling_main():
                 # n건당 크롤링 데이터적재알림
                 if i != 0 and i % 10 == 0:
                     noti = {
-                        "channel": kihay["channel"],
+                        "channel": slack_config["channel"],
                         "text": f"크롤링 진행중 {i}건"
                     }
                     # slack(noti)
@@ -205,7 +318,7 @@ def crawling_main():
 
 
         noti = {
-            "channel": kihay["channel"],
+            "channel": slack_config["channel"],
             "text": f"성공 {success}건\n실패 {fail_count}건\n누락{len(error_id)}"
         }
 
@@ -213,7 +326,7 @@ def crawling_main():
         logging.error(f"An unexpected error occurred: {e}")
         fail_count = len(e.errors)
         noti = {
-            "channel": kihay["channel"],
+            "channel": slack_config["channel"],
             "text": f"Error 크롤링 중단({fail_count})\n{e}"
         }
         for error in e.errors:
@@ -223,14 +336,14 @@ def crawling_main():
     # slack(noti)
 
 
-# 슬랙 알림보내기
+########## 슬랙 알림보내기 ##########
 def slack(noti):
     response = requests.post(slack_config['url'], headers=headers, json=noti)
     if response.status_code != 200:
         logging.info(f"Failed to send Slack notification. Status code: {response.status_code}, Response: {response.text}")
 
 
-# "더보기" 버튼 클릭하여 모든 데이터를 로드
+########## 더보기버튼처리 ##########
 def moreBtn():
     driver = webdriver.Edge(service=service, options=options)
     while True:
@@ -249,7 +362,17 @@ def moreBtn():
             except:
                 break
 
+
+def main():
+    # 매일 at()시에 do()함수(job) 실행
+    schedule.every().day.at("01:00").do(crawling_main)
+    schedule.every().day.at("03:00").do(crawling_retry)
+
+    while True:
+        # 스케줄러에 등록된작업실행
+        schedule.run_pending()
+        time.sleep(1)
+
 if __name__ == "__main__":
-    
-    crawling_main()
+    main()
 
