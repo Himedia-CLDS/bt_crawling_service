@@ -364,7 +364,7 @@ def moreBtn():
 
 
 def main():
-    # 매일 at()시에 do()함수(job) 실행
+    # 매일 at()시에 do(job)함수 실행
     schedule.every().day.at("01:00").do(crawling_main)
     schedule.every().day.at("03:00").do(crawling_retry)
 
