@@ -42,7 +42,7 @@ slack_config = config['slack']
 
 ########## 크롤링 ##########
 def crawling_main():
-    logging.info("===== START crawling_main() =====")
+    logging.info("===== START crawling_main =====")
 
     noti = {
         "channel": slack_config["channel"],
@@ -156,11 +156,12 @@ def crawling_main():
 
                 # n건당 크롤링 데이터적재알림
                 if i != 0 and i % 10 == 0:
+                    logging.info(f">>> 크롤링 진행중 {i}건")
                     noti = {
                         "channel": slack_config["channel"],
                         "text": f"크롤링 진행중 {i}건"
                     }
-                    # slack(noti)
+                    slack(noti)
 
             except Exception as e:
                 logging.info(f"[{i}] {products_id}")
@@ -173,8 +174,6 @@ def crawling_main():
     except Exception as e:
         logging.info(f"Failed to set up WebDriver: {e}")
         
-
-    print(f"element: {len(error_id)}")
 
     # Elasticsearch 설정
     es_config = config['es']
@@ -227,11 +226,11 @@ def crawling_main():
             logging.error(error)
 
     print(noti.get("text"))
-    # slack(noti)
+    slack(noti)
 
 ########## 실패데이터 재적재 ##########
 def crawling_retry():
-    logging.info("===== START crawling_retry() =====")
+    logging.info("===== START crawling_retry =====")
 
     noti = {
         "channel": slack_config["channel"],
@@ -335,8 +334,7 @@ def crawling_retry():
                 "text": "** 크롤링 재시도 알림 **\n크롤링 재시도 성공"
             }
 
-        print(noti["text"])
-        # slack(noti)
+        slack(noti)
 
     except NotFoundError:
         print(str(NotFoundError))
@@ -372,13 +370,13 @@ def main():
     logging.info("===== START main() =====")
     crawling_main()
     # 매일 at()시에 do(job)함수 실행
-    # schedule.every().day.at("01:00").do(crawling_main)
-    # schedule.every().day.at("03:00").do(crawling_retry)
+    schedule.every().day.at("01:00").do(crawling_main)
+    schedule.every().day.at("03:00").do(crawling_retry)
 
-    # while True:
-    #     # 스케줄러에 등록된작업실행
-    #     schedule.run_pending()
-    #     time.sleep(1)
+    while True:
+        # 스케줄러에 등록된작업실행
+        schedule.run_pending()
+        time.sleep(1)
 
 if __name__ == "__main__":
     main()
