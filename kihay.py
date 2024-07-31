@@ -111,7 +111,6 @@ def crawling_main():
                 price = price_element.text.strip() if price_element else 'No price'
                 img_src = img_element.get_attribute('src') if img_element else 'No image'
                 category = categori_element.text.replace('종류', '') if categori_element else 'No dosage'
-                print(f"category: {category}({type(category)})")
                 
                 if "위스키" in category.lower():
                     alcohol = alcohol_element.text.replace('도수', '') if alcohol_element else 'No dosage'
@@ -217,15 +216,13 @@ def crawling_main():
 
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
-        fail_count = len(e.errors)
         noti = {
             "channel": slack_config["channel"],
-            "text": f"Error 크롤링 중단({fail_count})\n{e}"
+            "text": f"Error 크롤링 중단\n{e}"
         }
         for error in e.errors:
             logging.error(error)
 
-    print(noti.get("text"))
     slack(noti)
 
 ########## 실패데이터 재적재 ##########
@@ -337,7 +334,7 @@ def crawling_retry():
         slack(noti)
 
     except NotFoundError:
-        print(str(NotFoundError))
+        logging.info(str(NotFoundError))
 
 ########## 슬랙 알림보내기 ##########
 def slack(noti):
