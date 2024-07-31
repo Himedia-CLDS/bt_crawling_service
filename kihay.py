@@ -49,7 +49,6 @@ def crawling_main():
         "text": "** 크롤링 시작 **"
     }
     slack(noti)
-    driver = None
     
     try:
         driver = webdriver.Edge(service=service, options=options)
@@ -170,11 +169,10 @@ def crawling_main():
                     "_index": "none_element",
                     "_id": products_id
                 })
-
+        driver.quit()
     except Exception as e:
         logging.info(f"Failed to set up WebDriver: {e}")
-    finally:
-        driver.quit()
+        
 
     print(f"element: {len(error_id)}")
 
@@ -372,15 +370,15 @@ def moreBtn():
 
 def main():
     logging.info("===== START main() =====")
-
+    crawling_main()
     # 매일 at()시에 do(job)함수 실행
-    schedule.every().day.at("01:00").do(crawling_main)
-    schedule.every().day.at("03:00").do(crawling_retry)
+    # schedule.every().day.at("01:00").do(crawling_main)
+    # schedule.every().day.at("03:00").do(crawling_retry)
 
-    while True:
-        # 스케줄러에 등록된작업실행
-        schedule.run_pending()
-        time.sleep(1)
+    # while True:
+    #     # 스케줄러에 등록된작업실행
+    #     schedule.run_pending()
+    #     time.sleep(1)
 
 if __name__ == "__main__":
     main()
