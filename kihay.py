@@ -28,7 +28,7 @@ with open('security.json', 'r') as security:
     config = json.load(security)
 
 # 브라우저 열기
-driver = None
+
 options = Options()
 options.headless = True  # Rambda에서는 GUI를 지원하지 않음
 options.add_experimental_option(
@@ -49,7 +49,8 @@ def crawling_main():
         "text": "** 크롤링 시작 **"
     }
     slack(noti)
-
+    driver = None
+    
     try:
         driver = webdriver.Edge(service=service, options=options)
         error_id =[]
