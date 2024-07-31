@@ -39,6 +39,8 @@ slack_config = config['slack']
 
 ########## 실패데이터 재적재 ##########
 def crawling_retry():
+    logging.info("===== START crawling_retry() =====")
+
     noti = {
         "channel": slack_config["channel"],
         "text": "** 실패데이터 재적재 시작 **"
@@ -149,6 +151,8 @@ def crawling_retry():
 
 ########## 크롤링 ##########
 def crawling_main():
+    logging.info("===== START crawling_main() =====")
+
     noti = {
         "channel": slack_config["channel"],
         "text": "** 크롤링 시작 **"
@@ -364,6 +368,8 @@ def moreBtn():
 
 
 def main():
+    logging.info("===== START main() =====")
+
     # 매일 at()시에 do(job)함수 실행
     schedule.every().day.at("01:00").do(crawling_main)
     schedule.every().day.at("03:00").do(crawling_retry)
