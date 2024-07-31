@@ -28,6 +28,7 @@ with open('security.json', 'r') as security:
     config = json.load(security)
 
 # 브라우저 열기
+driver = None
 options = Options()
 options.headless = True  # Rambda에서는 GUI를 지원하지 않음
 options.add_experimental_option(
@@ -37,117 +38,7 @@ service = Service(EdgeChromiumDriverManager().install())
 headers = {'Content-Type': 'application/json'}
 slack_config = config['slack']
 
-########## 실패데이터 재적재 ##########
-def crawling_retry():
-    logging.info("===== START crawling_retry() =====")
 
-    noti = {
-        "channel": slack_config["channel"],
-        "text": "** 실패데이터 재적재 시작 **"
-    }
-    slack(noti)
-
-    try:
-
-        # 엘라스틱 정보
-        es_config = config['es']
-        es = Elasticsearch(
-            [es_config['es_url']],
-            http_auth=(es_config['username'], es_config['password'])
-        )
-
-        noti = {
-            "channel": slack_config["channel"],
-            "text": "** 크롤링 재시도 **"
-        }
-
-        # fail_test_data 인덱스에 데이터가 없을때 까지 반복
-        while True:
-
-            # search사용해서 인덱스의 모든데이터 불러오기
-            query = {
-                "query": {
-                    "match_all": {}
-                }
-            }
-            get_data = es.search(index=es_config['fail_index'], body=query)
-            datas = get_data["hits"]["hits"]
-
-            # 인덱스 변경
-            set_data = []
-            for hit in datas:
-                data = {
-                    "_op_type": "index",
-                    "_index": es_config['main_index'],
-                    "_id": hit["_id"],
-                    "_source": hit["_source"]
-                }
-                set_data.append(data)
-
-            # 데이터 전송
-            get_data = []
-            success_id = []
-            fail_count = 0
-            success, responses = bulk(es, set_data, raise_on_error=False)
-            if len(responses) > 0:
-                for data in datas:
-                    for response in responses:
-                        if 'index' in response and response['index']['status'] >= 300:
-                            fail_count += 1
-                            if data["_index"] == response['index']:
-                                temp = {
-                                    "_op_type": "index",
-                                    "_index": es_config['fail_index'],
-                                    "_id": data["_id"],
-                                    "_source": data["_source"]
-                                }
-                                get_data.append(temp)
-                        else:
-                            temp = {
-                                '_op_type': 'delete',
-                                "_index": es_config['fail_index'],
-                                "_id": response['index']['_id']
-                            }
-                            success_id.append(temp)
-            else:
-                if len(get_data) == 0:
-                    for data in set_data:
-                        temp = {
-                            '_op_type': 'delete',
-                            "_index": es_config['fail_index'],
-                            "_id": data["_id"]
-                        }
-                        success_id.append(temp)
-                else:
-                    for gdata, sdata in zip(get_data, set_data):
-                        if gdata["_id"] != sdata["_id"]:
-                            temp = {
-                                '_op_type': 'delete',
-                                "_index": es_config['fail_index'],
-                                "_id": sdata["_id"]
-                            }
-                        success_id.append(temp)
-
-            bulk(es, get_data, raise_on_error=False)
-            bulk(es, success_id, raise_on_error=False)
-
-            if len(datas) == 0:
-                noti = {
-                    "channel": slack_config["channel"],
-                    "text": "** 크롤링 재시도 알림 **\n데이터가 없습니다."
-                }
-                break
-
-            noti = {
-                "channel": slack_config["channel"],
-                "text": "** 크롤링 재시도 알림 **\n크롤링 재시도 성공"
-            }
-
-        print(noti["text"])
-        # slack(noti)
-
-    except NotFoundError:
-        print(str(NotFoundError))
 
 ########## 크롤링 ##########
 def crawling_main():
@@ -339,6 +230,117 @@ def crawling_main():
     print(noti.get("text"))
     # slack(noti)
 
+########## 실패데이터 재적재 ##########
+def crawling_retry():
+    logging.info("===== START crawling_retry() =====")
+
+    noti = {
+        "channel": slack_config["channel"],
+        "text": "** 실패데이터 재적재 시작 **"
+    }
+    slack(noti)
+
+    try:
+
+        # 엘라스틱 정보
+        es_config = config['es']
+        es = Elasticsearch(
+            [es_config['es_url']],
+            http_auth=(es_config['username'], es_config['password'])
+        )
+
+        noti = {
+            "channel": slack_config["channel"],
+            "text": "** 크롤링 재시도 **"
+        }
+
+        # fail_test_data 인덱스에 데이터가 없을때 까지 반복
+        while True:
+
+            # search사용해서 인덱스의 모든데이터 불러오기
+            query = {
+                "query": {
+                    "match_all": {}
+                }
+            }
+            get_data = es.search(index=es_config['fail_index'], body=query)
+            datas = get_data["hits"]["hits"]
+
+            # 인덱스 변경
+            set_data = []
+            for hit in datas:
+                data = {
+                    "_op_type": "index",
+                    "_index": es_config['main_index'],
+                    "_id": hit["_id"],
+                    "_source": hit["_source"]
+                }
+                set_data.append(data)
+
+            # 데이터 전송
+            get_data = []
+            success_id = []
+            fail_count = 0
+            success, responses = bulk(es, set_data, raise_on_error=False)
+            if len(responses) > 0:
+                for data in datas:
+                    for response in responses:
+                        if 'index' in response and response['index']['status'] >= 300:
+                            fail_count += 1
+                            if data["_index"] == response['index']:
+                                temp = {
+                                    "_op_type": "index",
+                                    "_index": es_config['fail_index'],
+                                    "_id": data["_id"],
+                                    "_source": data["_source"]
+                                }
+                                get_data.append(temp)
+                        else:
+                            temp = {
+                                '_op_type': 'delete',
+                                "_index": es_config['fail_index'],
+                                "_id": response['index']['_id']
+                            }
+                            success_id.append(temp)
+            else:
+                if len(get_data) == 0:
+                    for data in set_data:
+                        temp = {
+                            '_op_type': 'delete',
+                            "_index": es_config['fail_index'],
+                            "_id": data["_id"]
+                        }
+                        success_id.append(temp)
+                else:
+                    for gdata, sdata in zip(get_data, set_data):
+                        if gdata["_id"] != sdata["_id"]:
+                            temp = {
+                                '_op_type': 'delete',
+                                "_index": es_config['fail_index'],
+                                "_id": sdata["_id"]
+                            }
+                        success_id.append(temp)
+
+            bulk(es, get_data, raise_on_error=False)
+            bulk(es, success_id, raise_on_error=False)
+
+            if len(datas) == 0:
+                noti = {
+                    "channel": slack_config["channel"],
+                    "text": "** 크롤링 재시도 알림 **\n데이터가 없습니다."
+                }
+                break
+
+            noti = {
+                "channel": slack_config["channel"],
+                "text": "** 크롤링 재시도 알림 **\n크롤링 재시도 성공"
+            }
+
+        print(noti["text"])
+        # slack(noti)
+
+    except NotFoundError:
+        print(str(NotFoundError))
 
 ########## 슬랙 알림보내기 ##########
 def slack(noti):
