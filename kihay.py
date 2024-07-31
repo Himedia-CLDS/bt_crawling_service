@@ -220,8 +220,7 @@ def crawling_main():
             "channel": slack_config["channel"],
             "text": f"Error 크롤링 중단\n{e}"
         }
-        for error in e.errors:
-            logging.error(error)
+        logging.error(e)
 
     slack(noti)
 
