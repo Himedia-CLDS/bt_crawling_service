@@ -40,10 +40,9 @@ options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  # webdriver 로그뺴기
 
 # 로컬환경
-# service = Service(EdgeChromiumDriverManager().install())
-
-# ec2
-service = Service('/usr/local/bin/msedgedriver')
+service = Service(EdgeChromiumDriverManager().install())
+# ec2 경로지정
+# service = Service('/usr/local/bin/msedgedriver')
 
 headers = {'Content-Type': 'application/json'}
 slack_config = config['slack']
@@ -69,7 +68,7 @@ def crawling_main():
         driver = webdriver.Edge(service=service, options=options)
         driver.implicitly_wait(10)
         driver.get(kihay["url"])
-        c_log.info(">>>>>>> driver")
+        c_log.info(">>>>>>> driver") #테스트
 
         # 가져올 데이터 상위태그
         items = driver.find_elements(By.CSS_SELECTOR, 'div.img_box')
@@ -242,7 +241,7 @@ def crawling_main():
 
 ########## 실패데이터 재적재 ##########
 def crawling_retry():
-    c_log.info("===== START crawling_retry =====")
+    c_log.info(">>> 실패데이터 ReTry")
 
     noti = {
         "channel": slack_config["channel"],
@@ -381,11 +380,15 @@ def moreBtn():
 
 def main():
     c_log.info("===== START main() =====")
-    crawling_main()
-    # 매일 at()시에 do(job)함수 실행
+
+    crawling_main() #테스트
+    
+    # # 매일 at()시에 do(job)함수 실행
     # schedule.every().day.at("01:00").do(crawling_main)
     # schedule.every().day.at("03:00").do(crawling_retry)
 
+    # # while 무슨기능인지 알아보기
+    # # 빠지면 어떻게 동작하는지 알아보기
     # while True:
     #     # 스케줄러에 등록된작업실행
     #     schedule.run_pending()
