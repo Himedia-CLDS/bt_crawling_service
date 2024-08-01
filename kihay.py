@@ -55,21 +55,21 @@ def crawling_main():
     }
     slack(noti)
     
-    try:
-        driver = webdriver.Edge(service=service, options=options)
-        error_id =[]
+    try:        
         # 크롤링할 URL
         kihay = config["kihay"]
-        driver.get(kihay["url"])
-
+        
         # 페이지 로드 대기 (필요 시 explicit wait을 사용)
+        driver = webdriver.Edge(service=service, options=options)
         driver.implicitly_wait(10)
+        driver.get(kihay["url"])
 
         # 가져올 데이터 상위태그
         items = driver.find_elements(By.CSS_SELECTOR, 'div.img_box')
 
         urls = []
         products = []
+        error_id = []
 
         c_log.info(">>> 상세 URL 수집중...")
         # 상세정보URL가져오기
@@ -230,6 +230,7 @@ def crawling_main():
 
     c_log.info(">>> 크롤링 완료 ")
     slack(noti)
+
 
 ########## 실패데이터 재적재 ##########
 def crawling_retry():
