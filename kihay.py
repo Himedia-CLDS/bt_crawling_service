@@ -159,6 +159,7 @@ def crawling_main():
                     "_id": products_id,
                     "_source": product
                 })
+                c_log.info(f"[{i}]products")
 
                 # n건당 크롤링 데이터적재알림
                 if i != 0 and i % 10 == 0:
