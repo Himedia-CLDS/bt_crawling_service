@@ -35,7 +35,7 @@ with open('security.json', 'r') as security:
 
 ##### 브라우저설정
 options = Options()
-options.headless = False  # Rambda에서는 GUI를 지원하지 않음
+options.headless = True  # Rambda에서는 GUI를 지원하지 않음
 options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  # webdriver 로그뺴기
 
