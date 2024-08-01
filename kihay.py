@@ -43,7 +43,7 @@ options.add_experimental_option(
 # service = Service(EdgeChromiumDriverManager().install())
 
 # ec2
-service = Service('/path/to/msedgedriver')
+service = Service('/usr/local/bin/msedgedriver')
 
 headers = {'Content-Type': 'application/json'}
 slack_config = config['slack']
