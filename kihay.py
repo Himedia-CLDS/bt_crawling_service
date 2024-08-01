@@ -56,7 +56,7 @@ def crawling_main():
     slack(noti)
     
     try:    
-        c_log.info(">>>>>>> try start")
+        
         # 크롤링할 URL
         kihay = config["kihay"]
         
@@ -64,6 +64,7 @@ def crawling_main():
         driver = webdriver.Edge(service=service, options=options)
         driver.implicitly_wait(10)
         driver.get(kihay["url"])
+        c_log.info(">>>>>>> driver")
 
         # 가져올 데이터 상위태그
         items = driver.find_elements(By.CSS_SELECTOR, 'div.img_box')
