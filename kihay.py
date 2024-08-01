@@ -38,7 +38,12 @@ options = Options()
 options.headless = False  # Rambda에서는 GUI를 지원하지 않음
 options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  # webdriver 로그뺴기
-service = Service(EdgeChromiumDriverManager().install())
+
+# 로컬환경
+# service = Service(EdgeChromiumDriverManager().install())
+
+# ec2
+service = Service('/path/to/msedgedriver')
 
 headers = {'Content-Type': 'application/json'}
 slack_config = config['slack']
