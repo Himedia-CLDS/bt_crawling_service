@@ -55,7 +55,8 @@ def crawling_main():
     }
     slack(noti)
     
-    try:        
+    try:    
+        c_log.info(">>>>>>> try start")
         # 크롤링할 URL
         kihay = config["kihay"]
         
