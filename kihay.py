@@ -17,7 +17,13 @@ import schedule
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+##### 로그설정
+log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='[%Y-%m-%d %H:%M:%S]')
+c_log = logging.getLogger(name='CrawlingLog')
+c_log.setLevel(logging.INFO)
+logfile_handler = logging.FileHandler("./logs/crawling_kihay.log", encoding='utf-8')
+logfile_handler.setFormatter(log_formatter)
+c_log.addHandler(logfile_handler)
 
 # WebDriver Manager의 로깅 레벨을 설정
 wdm_logger = logging.getLogger("WDM")
@@ -27,8 +33,7 @@ wdm_logger.setLevel(logging.WARNING)  # WARNING 이상의 로그만 출력
 with open('security.json', 'r') as security:
     config = json.load(security)
 
-# 브라우저 열기
-
+##### 브라우저설정
 options = Options()
 options.headless = True  # Rambda에서는 GUI를 지원하지 않음
 options.add_experimental_option(
@@ -42,7 +47,7 @@ slack_config = config['slack']
 
 ########## 크롤링 ##########
 def crawling_main():
-    logging.info("===== START crawling_main =====")
+    c_log.info(">>> 크롤링 시작")
 
     noti = {
         "channel": slack_config["channel"],
@@ -66,6 +71,7 @@ def crawling_main():
         urls = []
         products = []
 
+        c_log.info(">>> 상세 URL 수집중...")
         # 상세정보URL가져오기
         for i, item in enumerate(items):
             if len(urls) == 15:
@@ -78,7 +84,8 @@ def crawling_main():
                 urls.append(product_url)
                 
             except Exception as e:
-                logging.info(f"[{i}] Error processing item: {e}")
+                c_log.info(f"[{i}] Error processing item: {e}")
+
 
         # 상세URL 데이터 꺼내기
         driver = webdriver.Edge(service=service, options=options)
@@ -155,7 +162,7 @@ def crawling_main():
 
                 # n건당 크롤링 데이터적재알림
                 if i != 0 and i % 10 == 0:
-                    logging.info(f">>> 크롤링 진행중 {i}건")
+                    c_log.info(f">>> 크롤링 진행중 {i}건")
                     noti = {
                         "channel": slack_config["channel"],
                         "text": f"크롤링 진행중 {i}건"
@@ -163,15 +170,15 @@ def crawling_main():
                     slack(noti)
 
             except Exception as e:
-                logging.info(f"[{i}] {products_id}")
-                logging.info(f"[{i}] Error processing item: {e}")
+                c_log.info(f"[{i}] {products_id}")
+                c_log.info(f"[{i}] Error processing item: {e}")
                 error_id.append({
                     "_index": "none_element",
                     "_id": products_id
                 })
         driver.quit()
     except Exception as e:
-        logging.info(f"Failed to set up WebDriver: {e}")
+        c_log.info(f"Failed to set up WebDriver: {e}")
         
 
     # Elasticsearch 설정
@@ -215,22 +222,22 @@ def crawling_main():
         }
 
     except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
+        c_log.error(f"An unexpected error occurred: {e}")
         noti = {
             "channel": slack_config["channel"],
             "text": f"Error 크롤링 중단\n{e}"
         }
-        logging.error(e)
 
+    c_log.info(">>> 크롤링 완료 ")
     slack(noti)
 
 ########## 실패데이터 재적재 ##########
 def crawling_retry():
-    logging.info("===== START crawling_retry =====")
+    c_log.info("===== START crawling_retry =====")
 
     noti = {
         "channel": slack_config["channel"],
-        "text": "** 실패데이터 재적재 시작 **"
+        "text": "*** 실패데이터 재적재 시작 ***"
     }
     slack(noti)
 
@@ -245,7 +252,7 @@ def crawling_retry():
 
         noti = {
             "channel": slack_config["channel"],
-            "text": "** 크롤링 재시도 **"
+            "text": "*** 크롤링 재시도 ***"
         }
 
         # fail_test_data 인덱스에 데이터가 없을때 까지 반복
@@ -321,25 +328,26 @@ def crawling_retry():
             if len(datas) == 0:
                 noti = {
                     "channel": slack_config["channel"],
-                    "text": "** 크롤링 재시도 알림 **\n데이터가 없습니다."
+                    "text": "*** 크롤링 재시도 알림 ***\n데이터가 없습니다."
                 }
                 break
 
             noti = {
                 "channel": slack_config["channel"],
-                "text": "** 크롤링 재시도 알림 **\n크롤링 재시도 성공"
+                "text": "*** 크롤링 재시도 알림 ***\n크롤링 재시도 성공"
             }
 
         slack(noti)
 
     except NotFoundError:
-        logging.info(str(NotFoundError))
+        c_log.info(str(NotFoundError))
 
 ########## 슬랙 알림보내기 ##########
 def slack(noti):
     response = requests.post(slack_config['url'], headers=headers, json=noti)
     if response.status_code != 200:
-        logging.info(f"Failed to send Slack notification. Status code: {response.status_code}, Response: {response.text}")
+        c_log.info(f"Failed to send Slack notification. Status code: {
+                   response.status_code}, Response: {response.text}")
 
 
 ########## 더보기버튼처리 ##########
@@ -363,16 +371,16 @@ def moreBtn():
 
 
 def main():
-    logging.info("===== START main() =====")
+    c_log.info("===== START main() =====")
     crawling_main()
     # 매일 at()시에 do(job)함수 실행
-    schedule.every().day.at("01:00").do(crawling_main)
-    schedule.every().day.at("03:00").do(crawling_retry)
+    # schedule.every().day.at("01:00").do(crawling_main)
+    # schedule.every().day.at("03:00").do(crawling_retry)
 
-    while True:
-        # 스케줄러에 등록된작업실행
-        schedule.run_pending()
-        time.sleep(1)
+    # while True:
+    #     # 스케줄러에 등록된작업실행
+    #     schedule.run_pending()
+    #     time.sleep(1)
 
 if __name__ == "__main__":
     main()

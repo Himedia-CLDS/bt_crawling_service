@@ -1,0 +1,98 @@
+[2024-08-01 14:28:10] - CrawlingLog - INFO - ===== START main() =====
+[2024-08-01 14:28:10] - CrawlingLog - INFO - ===== START crawling_main =====
+[2024-08-01 14:28:44] - CrawlingLog - INFO - [9] 1000000409
+[2024-08-01 14:28:44] - CrawlingLog - INFO - [9] Error processing item: Message: no such element: Unable to locate element: {"method":"xpath","selector":".//li[span[contains(text(),'Aroma')]]"}
+  (Session info: MicrosoftEdge=127.0.2651.74); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF7E34F0602+11762]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3490949+271417]
+	(No symbol) [0x00007FF7E32AFE6E]
+	(No symbol) [0x00007FF7E32F6964]
+	(No symbol) [0x00007FF7E32F69EB]
+	(No symbol) [0x00007FF7E3332107]
+	(No symbol) [0x00007FF7E3315F7F]
+	(No symbol) [0x00007FF7E32EC2FD]
+	(No symbol) [0x00007FF7E332FA97]
+	(No symbol) [0x00007FF7E3315BA3]
+	(No symbol) [0x00007FF7E32EB80C]
+	(No symbol) [0x00007FF7E32EACED]
+	(No symbol) [0x00007FF7E32EB3D1]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF7E366B584+879700]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF7E3425D4F+56159]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF7E34186E3+1267]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF7E366A2DD+874925]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3498541+303153]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3494904+287732]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3494A3B+288043]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E348C990+255104]
+	BaseThreadInitThunk [0x00007FFD5F16257D+29]
+	RtlUserThreadStart [0x00007FFD6138AF28+40]
+
+[2024-08-01 14:28:46] - CrawlingLog - INFO - >>> 크롤링 진행중 10건
+[2024-08-01 14:35:12] - CrawlingLog - INFO - ===== START main() =====
+[2024-08-01 14:35:12] - CrawlingLog - INFO - >>> 크롤링 시작
+[2024-08-01 14:35:15] - CrawlingLog - INFO - >>> 상세 URL 수집중...
+[2024-08-01 14:35:46] - CrawlingLog - INFO - [9] 1000000409
+[2024-08-01 14:35:46] - CrawlingLog - INFO - [9] Error processing item: Message: no such element: Unable to locate element: {"method":"xpath","selector":".//li[span[contains(text(),'Aroma')]]"}
+  (Session info: MicrosoftEdge=127.0.2651.74); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF7E34F0602+11762]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3490949+271417]
+	(No symbol) [0x00007FF7E32AFE6E]
+	(No symbol) [0x00007FF7E32F6964]
+	(No symbol) [0x00007FF7E32F69EB]
+	(No symbol) [0x00007FF7E3332107]
+	(No symbol) [0x00007FF7E3315F7F]
+	(No symbol) [0x00007FF7E32EC2FD]
+	(No symbol) [0x00007FF7E332FA97]
+	(No symbol) [0x00007FF7E3315BA3]
+	(No symbol) [0x00007FF7E32EB80C]
+	(No symbol) [0x00007FF7E32EACED]
+	(No symbol) [0x00007FF7E32EB3D1]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF7E366B584+879700]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF7E3425D4F+56159]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF7E34186E3+1267]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF7E366A2DD+874925]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3498541+303153]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3494904+287732]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3494A3B+288043]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E348C990+255104]
+	BaseThreadInitThunk [0x00007FFD5F16257D+29]
+	RtlUserThreadStart [0x00007FFD6138AF28+40]
+
+[2024-08-01 14:35:48] - CrawlingLog - INFO - >>> 크롤링 진행중 10건
+[2024-08-01 14:35:59] - CrawlingLog - ERROR - An unexpected error occurred: TransportError(429, 'circuit_breaking_exception', '[parent] Data too large, data for [<http_request>] would be [255206306/243.3mb], which is larger than the limit of [255013683/243.1mb], real usage: [255181000/243.3mb], new bytes reserved: [25306/24.7kb], usages [request=192/192b, fielddata=41031/40kb, in_flight_requests=25306/24.7kb, accounting=4567820/4.3mb]')
+[2024-08-01 14:35:59] - CrawlingLog - INFO - *** 크롤링 완료 ***
+[2024-08-01 14:38:08] - CrawlingLog - INFO - ===== START main() =====
+[2024-08-01 14:38:08] - CrawlingLog - INFO - [2024-08-01 14:38:08]>>> 크롤링 시작
+[2024-08-01 14:38:29] - CrawlingLog - INFO - >>> 상세 URL 수집중...
+[2024-08-01 14:39:00] - CrawlingLog - INFO - [9] 1000000409
+[2024-08-01 14:39:00] - CrawlingLog - INFO - [9] Error processing item: Message: no such element: Unable to locate element: {"method":"xpath","selector":".//li[span[contains(text(),'Aroma')]]"}
+  (Session info: MicrosoftEdge=127.0.2651.74); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF7E34F0602+11762]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3490949+271417]
+	(No symbol) [0x00007FF7E32AFE6E]
+	(No symbol) [0x00007FF7E32F6964]
+	(No symbol) [0x00007FF7E32F69EB]
+	(No symbol) [0x00007FF7E3332107]
+	(No symbol) [0x00007FF7E3315F7F]
+	(No symbol) [0x00007FF7E32EC2FD]
+	(No symbol) [0x00007FF7E332FA97]
+	(No symbol) [0x00007FF7E3315BA3]
+	(No symbol) [0x00007FF7E32EB80C]
+	(No symbol) [0x00007FF7E32EACED]
+	(No symbol) [0x00007FF7E32EB3D1]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF7E366B584+879700]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF7E3425D4F+56159]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF7E34186E3+1267]
+	Microsoft::Applications::Events::EventProperty::empty [0x00007FF7E366A2DD+874925]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3498541+303153]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3494904+287732]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E3494A3B+288043]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF7E348C990+255104]
+	BaseThreadInitThunk [0x00007FFD5F16257D+29]
+	RtlUserThreadStart [0x00007FFD6138AF28+40]
+
+[2024-08-01 14:39:01] - CrawlingLog - INFO - >>> 크롤링 진행중 10건
+[2024-08-01 14:39:24] - CrawlingLog - INFO - *** 크롤링 완료 ***
