@@ -40,7 +40,7 @@ with open('security.json', 'r') as security:
 ##### 브라우저설정
 options = Options()
 # Rambda에서는 GUI를 지원하지 않음
-options.headless = True  
+options.add_argument('--headless')
 # 샌드박스 비활성화
 # 샌드박스? 
 # 크롬이 웹페이지를 격리해 시스템 전체의 봔을 강화하는 기능
@@ -53,6 +53,7 @@ options.add_argument('--disable-dev-shm-usage')
 # 운격 디버깅 포트설정
 # 브라우저가 제대로 실행 되는지, 문제발생시 원격디버깅 가능
 options.add_argument('--remote-debugging-port=9222')
+options.add_argument("--single-process")
 # webdriver 로그뺴기
 options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  
