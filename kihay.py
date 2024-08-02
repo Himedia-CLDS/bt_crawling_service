@@ -59,9 +59,9 @@ options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  
 
 # 로컬환경
-service = Service('C:/Users/tiq00/.wdm/drivers/chromedriver/win64/chromedriver-win64/chromedriver.exe')
+# service = Service('C:/Users/tiq00/.wdm/drivers/chromedriver/win64/chromedriver-win64/chromedriver.exe')
 # ec2 경로지정
-# service = Service('/usr/local/bin/chromedriver')
+service = Service('/usr/local/bin/chromedriver')
 
 headers = {'Content-Type': 'application/json'}
 slack_config = config['slack']
