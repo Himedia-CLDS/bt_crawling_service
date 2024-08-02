@@ -45,14 +45,14 @@ options.add_argument('--headless')
 # 샌드박스? 
 # 크롬이 웹페이지를 격리해 시스템 전체의 봔을 강화하는 기능
 # 컨테이너환경에선 이 기능이 제대로 동작하지 않을 수 있다.
-options.add_argument('--no-sandbox')
-# 공유메모리 비활성화
-# 크롬은 기본적으로 공유메모리를 사용하는데 공간이 부족할 경우 크래시가 발생 할 수 있다.
-# 옵션추가로 메모리부족 문제 해결
-options.add_argument('--disable-dev-shm-usage')
-# 운격 디버깅 포트설정
-# 브라우저가 제대로 실행 되는지, 문제발생시 원격디버깅 가능
-options.add_argument('--remote-debugging-port=9222')
+# options.add_argument('--no-sandbox')
+# # 공유메모리 비활성화
+# # 크롬은 기본적으로 공유메모리를 사용하는데 공간이 부족할 경우 크래시가 발생 할 수 있다.
+# # 옵션추가로 메모리부족 문제 해결
+# options.add_argument('--disable-dev-shm-usage')
+# # 운격 디버깅 포트설정
+# # 브라우저가 제대로 실행 되는지, 문제발생시 원격디버깅 가능
+# options.add_argument('--remote-debugging-port=9222')
 options.add_argument("--single-process")
 # webdriver 로그뺴기
 options.add_experimental_option(
@@ -400,18 +400,18 @@ def moreBtn():
 def main():
     c_log.info("===== START main() =====")
 
-    # crawling_main() #테스트
+    crawling_main() #테스트
     
     # # 매일 at()시에 do(job)함수 실행
-    schedule.every().day.at("14:00").do(crawling_main)
-    schedule.every().day.at("15:00").do(crawling_retry)
+    # schedule.every().day.at("14:00").do(crawling_main)
+    # schedule.every().day.at("15:00").do(crawling_retry)
 
-    # while 무슨기능인지 알아보기
-    # 빠지면 어떻게 동작하는지 알아보기
-    while True:
-        # 스케줄러에 등록된작업실행
-        schedule.run_pending()
-        time.sleep(1)
+    # # while 무슨기능인지 알아보기
+    # # 빠지면 어떻게 동작하는지 알아보기
+    # while True:
+    #     # 스케줄러에 등록된작업실행
+    #     schedule.run_pending()
+    #     time.sleep(1)
 
 if __name__ == "__main__":
     main()
