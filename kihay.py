@@ -4,10 +4,9 @@ import json
 import urllib.parse
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.service import Service
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support import expected_conditions as EC
 from elasticsearch.exceptions import NotFoundError
 import time
@@ -21,9 +20,14 @@ from elasticsearch.helpers import bulk
 log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='[%Y-%m-%d %H:%M:%S]')
 c_log = logging.getLogger(name='CrawlingLog')
 c_log.setLevel(logging.INFO)
+# 파일핸들러
 logfile_handler = logging.FileHandler("./logs/crawling_kihay.log", encoding='utf-8')
 logfile_handler.setFormatter(log_formatter)
 c_log.addHandler(logfile_handler)
+# 콘솔 핸들러
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(log_formatter)
+c_log.addHandler(console_handler)
 
 # WebDriver Manager의 로깅 레벨을 설정
 wdm_logger = logging.getLogger("WDM")
@@ -40,7 +44,7 @@ options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  # webdriver 로그뺴기
 
 # 로컬환경
-service = Service(EdgeChromiumDriverManager().install())
+service = Service('C:/Users/tiq00/.wdm/drivers/chromedriver/win64/chromedriver-win64/chromedriver.exe')
 # ec2 경로지정
 # service = Service('/usr/local/bin/msedgedriver')
 
@@ -65,7 +69,7 @@ def crawling_main():
         kihay = config["kihay"]
         
         # 페이지 로드 대기 (필요 시 explicit wait을 사용)
-        driver = webdriver.Edge(service=service, options=options)
+        driver = webdriver.Chrome(service=service, options=options)
         driver.implicitly_wait(10)
         driver.get(kihay["url"])
         c_log.info(">>>>>>> driver") #테스트
@@ -94,7 +98,7 @@ def crawling_main():
 
 
         # 상세URL 데이터 꺼내기
-        driver = webdriver.Edge(service=service, options=options)
+        driver = webdriver.Chrome(service=service, options=options)
         in_items = driver.find_elements(By.CSS_SELECTOR, 'div.img_box')
         products_id = None
         for i, url in enumerate(urls):
@@ -360,7 +364,7 @@ def slack(noti):
 
 ########## 더보기버튼처리 ##########
 def moreBtn():
-    driver = webdriver.Edge(service=service, options=options)
+    driver = webdriver.Chrome(service=service, options=options)
     while True:
         try:
             more_button = driver.find_element(
