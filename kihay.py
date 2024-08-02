@@ -49,7 +49,7 @@ options.add_argument('--no-sandbox')
 # 공유메모리 비활성화
 # 크롬은 기본적으로 공유메모리를 사용하는데 공간이 부족할 경우 크래시가 발생 할 수 있다.
 # 옵션추가로 메모리부족 문제 해결
-# options.add_argument('--disable-dev-shm-usage')
+options.add_argument('--disable-dev-shm-usage')
 # 운격 디버깅 포트설정
 # 브라우저가 제대로 실행 되는지, 문제발생시 원격디버깅 가능
 # options.add_argument('--remote-debugging-port=9222')
