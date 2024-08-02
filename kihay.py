@@ -39,14 +39,28 @@ with open('security.json', 'r') as security:
 
 ##### 브라우저설정
 options = Options()
-options.headless = True  # Rambda에서는 GUI를 지원하지 않음
+# Rambda에서는 GUI를 지원하지 않음
+options.headless = True  
+# 샌드박스 비활성화
+# 샌드박스? 
+# 크롬이 웹페이지를 격리해 시스템 전체의 봔을 강화하는 기능
+# 컨테이너환경에선 이 기능이 제대로 동작하지 않을 수 있다.
+options.add_argument('--no-sandbox')
+# 공유메모리 비활성화
+# 크롬은 기본적으로 공유메모리를 사용하는데 공간이 부족할 경우 크래시가 발생 할 수 있다.
+# 옵션추가로 메모리부족 문제 해결
+# options.add_argument('--disable-dev-shm-usage')
+# 운격 디버깅 포트설정
+# 브라우저가 제대로 실행 되는지, 문제발생시 원격디버깅 가능
+# options.add_argument('--remote-debugging-port=9222')
+# webdriver 로그뺴기
 options.add_experimental_option(
-    'excludeSwitches', ['enable-logging'])  # webdriver 로그뺴기
+    'excludeSwitches', ['enable-logging'])  
 
 # 로컬환경
-# service = Service('C:/Users/tiq00/.wdm/drivers/chromedriver/win64/chromedriver-win64/chromedriver.exe')
+service = Service('C:/Users/tiq00/.wdm/drivers/chromedriver/win64/chromedriver-win64/chromedriver.exe')
 # ec2 경로지정
-service = Service('/usr/local/bin/chromedriver')
+# service = Service('/usr/local/bin/chromedriver')
 
 headers = {'Content-Type': 'application/json'}
 slack_config = config['slack']
