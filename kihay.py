@@ -52,7 +52,7 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 # 운격 디버깅 포트설정
 # 브라우저가 제대로 실행 되는지, 문제발생시 원격디버깅 가능
-# options.add_argument('--remote-debugging-port=9222')
+options.add_argument('--remote-debugging-port=9222')
 # webdriver 로그뺴기
 options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  
