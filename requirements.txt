@@ -1,5 +1,5 @@
-requests
-selenium
-webdriver_manager
+requests==2.32.2
+selenium==4.22.0
+webdriver_manager==4.0.2
 elasticsearch==7.14.0
-schedule
+schedule==1.2.2
