@@ -387,18 +387,18 @@ def moreBtn():
 def main():
     c_log.info("===== START main() =====")
 
-    # crawling_main()  # 테스트
+    crawling_main()  # 테스트
     
-    # 매일 at()시에 do(job)함수 실행
-    schedule.every().day.at("14:00").do(crawling_main)
-    schedule.every().day.at("15:00").do(crawling_retry)
+    # # 매일 at()시에 do(job)함수 실행
+    # schedule.every().day.at("14:00").do(crawling_main)
+    # schedule.every().day.at("15:00").do(crawling_retry)
 
-    # while 무슨기능인지 알아보기
-    # 빠지면 어떻게 동작하는지 알아보기
-    while True:
-        # 스케줄러에 등록된작업실행
-        schedule.run_pending()
-        time.sleep(1)
+    # # while 무슨기능인지 알아보기
+    # # 빠지면 어떻게 동작하는지 알아보기
+    # while True:
+    #     # 스케줄러에 등록된작업실행
+    #     schedule.run_pending()
+    #     time.sleep(1)
 
 if __name__ == "__main__":
     main()
