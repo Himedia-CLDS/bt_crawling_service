@@ -36,6 +36,13 @@ wdm_logger.setLevel(logging.WARNING)  # WARNING 이상의 로그만 출력
 # security.json 파일열기
 with open('security.json', 'r') as security:
     config = json.load(security)
+    
+# Elasticsearch 설정
+es_config = config['es']
+es = Elasticsearch(
+    [es_config['es_url']],
+    http_auth=(es_config['username'], es_config['password'])
+)
 
 ##### 브라우저설정
 options = Options()
@@ -191,14 +198,6 @@ def crawling_main():
         driver.quit()
     except Exception as e:
         c_log.info(f"Failed to set up WebDriver: {e}")
-        
-
-    # Elasticsearch 설정
-    es_config = config['es']
-    es = Elasticsearch(
-        [es_config['es_url']],
-        http_auth=(es_config['username'], es_config['password'])
-    )
 
     ##### Bulk API를 사용하여 데이터 전송 #####
     fail_count = 0
