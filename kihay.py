@@ -84,6 +84,8 @@ def crawling_main():
         driver.get(kihay["url"])
         c_log.info(">>>>>>> driver") #테스트
 
+        moreBtn()
+
         # 가져올 데이터 상위태그
         items = driver.find_elements(By.CSS_SELECTOR, 'div.img_box')
 
