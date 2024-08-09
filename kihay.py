@@ -87,8 +87,6 @@ def crawling_main():
         c_log.info(">>> 상세 URL 수집중...")
         # 상세정보URL가져오기
         for i, item in enumerate(items):
-            if len(urls) == 15:
-                break
             try:
                 url_element = item.find_element(By.CSS_SELECTOR, 'a')
                 product_url = url_element.get_attribute(
@@ -168,7 +166,7 @@ def crawling_main():
                     }
                 }
                 products.append({
-                    "_index": "bulk_api_test",
+                    "_index": es_config['main_index'],
                     "_id": products_id,
                     "_source": product
                 })
@@ -219,7 +217,7 @@ def crawling_main():
                 for product in products:
                     if product['_id'] == response['index']['_id']:
                         fail_data.append({
-                            "_index": "fail_test_data",
+                            "_index": es_config['fail_index'],
                             "_id": product['_id'],
                             "_source": product['_source']
                         })
@@ -352,6 +350,7 @@ def crawling_retry():
                 "text": "*** 크롤링 재시도 알림 ***\n크롤링 재시도 성공"
             }
 
+        c_log.info(">>> 재시도 완료")
         slack(noti)
 
     except NotFoundError:
@@ -388,7 +387,7 @@ def moreBtn():
 def main():
     c_log.info("===== START main() =====")
 
-    # crawling_main() #테스트
+    # crawling_main()  # 테스트
     
     # 매일 at()시에 do(job)함수 실행
     schedule.every().day.at("14:00").do(crawling_main)
