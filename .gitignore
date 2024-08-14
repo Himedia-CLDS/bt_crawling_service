@@ -1,6 +1,4 @@
-security.json
-
-
+config.yml
 edge.py
 
 logs/

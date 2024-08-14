@@ -1,0 +1,580 @@
+[2024-08-15 00:51:49] - CrawlingLog - INFO - ===== START main() =====
+[2024-08-15 00:51:49] - CrawlingLog - INFO - >>> 크롤링 시작
+[2024-08-15 00:54:07] - CrawlingLog - INFO - ===== START main() =====
+[2024-08-15 00:54:07] - CrawlingLog - INFO - >>> 크롤링 시작
+[2024-08-15 00:54:15] - CrawlingLog - INFO - Failed to set up WebDriver: Crawler.moreBtn() takes 1 positional argument but 2 were given
+[2024-08-15 00:54:15] - CrawlingLog - ERROR - An unexpected error occurred: cannot access local variable 'products' where it is not associated with a value
+[2024-08-15 00:54:15] - CrawlingLog - INFO - >>> 크롤링 완료 
+[2024-08-15 00:57:04] - CrawlingLog - INFO - ===== START main() =====
+[2024-08-15 00:57:04] - CrawlingLog - INFO - >>> 크롤링 시작
+[2024-08-15 00:57:46] - CrawlingLog - INFO - >>> 상세 URL 수집중...
+[2024-08-15 00:57:57] - CrawlingLog - INFO - [0] 1000000301
+[2024-08-15 00:57:57] - CrawlingLog - INFO - [0] Error processing item: cannot access local variable 'alcohol' where it is not associated with a value
+[2024-08-15 00:58:01] - CrawlingLog - INFO - [1] 1000000301
+[2024-08-15 00:58:01] - CrawlingLog - INFO - [1] Error processing item: cannot access local variable 'alcohol' where it is not associated with a value
+[2024-08-15 00:58:03] - CrawlingLog - INFO - [2]products
+[2024-08-15 00:58:06] - CrawlingLog - INFO - [3]products
+[2024-08-15 00:58:09] - CrawlingLog - INFO - [4]products
+[2024-08-15 00:58:11] - CrawlingLog - INFO - [5]products
+[2024-08-15 00:58:14] - CrawlingLog - INFO - [6]products
+[2024-08-15 00:58:16] - CrawlingLog - INFO - [7]products
+[2024-08-15 00:58:20] - CrawlingLog - INFO - [8]products
+[2024-08-15 00:58:32] - CrawlingLog - INFO - [9] 1000000409
+[2024-08-15 00:58:32] - CrawlingLog - INFO - [9] Error processing item: Message: no such element: Unable to locate element: {"method":"xpath","selector":".//li[span[contains(text(),'Aroma')]]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 00:58:35] - CrawlingLog - INFO - [10]products
+[2024-08-15 00:58:35] - CrawlingLog - INFO - >>> 크롤링 진행중 10건
+[2024-08-15 00:58:39] - CrawlingLog - INFO - [11]products
+[2024-08-15 00:58:42] - CrawlingLog - INFO - [12]products
+[2024-08-15 00:58:45] - CrawlingLog - INFO - [13]products
+[2024-08-15 00:58:48] - CrawlingLog - INFO - [14]products
+[2024-08-15 00:58:51] - CrawlingLog - INFO - [15]products
+[2024-08-15 00:58:54] - CrawlingLog - INFO - [16]products
+[2024-08-15 00:58:57] - CrawlingLog - INFO - [17]products
+[2024-08-15 00:58:59] - CrawlingLog - INFO - [18]products
+[2024-08-15 00:59:02] - CrawlingLog - INFO - [19]products
+[2024-08-15 00:59:05] - CrawlingLog - INFO - [20]products
+[2024-08-15 00:59:05] - CrawlingLog - INFO - >>> 크롤링 진행중 20건
+[2024-08-15 00:59:08] - CrawlingLog - INFO - [21]products
+[2024-08-15 00:59:11] - CrawlingLog - INFO - [22]products
+[2024-08-15 00:59:13] - CrawlingLog - INFO - [23]products
+[2024-08-15 00:59:16] - CrawlingLog - INFO - [24]products
+[2024-08-15 00:59:19] - CrawlingLog - INFO - [25]products
+[2024-08-15 00:59:22] - CrawlingLog - INFO - [26]products
+[2024-08-15 00:59:24] - CrawlingLog - INFO - [27]products
+[2024-08-15 00:59:27] - CrawlingLog - INFO - [28]products
+[2024-08-15 00:59:30] - CrawlingLog - INFO - [29]products
+[2024-08-15 00:59:32] - CrawlingLog - INFO - [30]products
+[2024-08-15 00:59:32] - CrawlingLog - INFO - >>> 크롤링 진행중 30건
+[2024-08-15 00:59:35] - CrawlingLog - INFO - [31]products
+[2024-08-15 00:59:38] - CrawlingLog - INFO - [32]products
+[2024-08-15 00:59:50] - CrawlingLog - INFO - [33] 1000000394
+[2024-08-15 00:59:50] - CrawlingLog - INFO - [33] Error processing item: Message: no such element: Unable to locate element: {"method":"xpath","selector":".//li[span[contains(text(),'종류')]]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 00:59:53] - CrawlingLog - INFO - [34]products
+[2024-08-15 00:59:55] - CrawlingLog - INFO - [35]products
+[2024-08-15 01:00:07] - CrawlingLog - INFO - [36] 1000000172
+[2024-08-15 01:00:07] - CrawlingLog - INFO - [36] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:00:10] - CrawlingLog - INFO - [37]products
+[2024-08-15 01:00:12] - CrawlingLog - INFO - [38]products
+[2024-08-15 01:00:15] - CrawlingLog - INFO - [39]products
+[2024-08-15 01:00:18] - CrawlingLog - INFO - [40]products
+[2024-08-15 01:00:18] - CrawlingLog - INFO - >>> 크롤링 진행중 40건
+[2024-08-15 01:00:21] - CrawlingLog - INFO - [41]products
+[2024-08-15 01:00:24] - CrawlingLog - INFO - [42]products
+[2024-08-15 01:00:27] - CrawlingLog - INFO - [43]products
+[2024-08-15 01:00:30] - CrawlingLog - INFO - [44]products
+[2024-08-15 01:00:33] - CrawlingLog - INFO - [45]products
+[2024-08-15 01:00:35] - CrawlingLog - INFO - [46]products
+[2024-08-15 01:00:47] - CrawlingLog - INFO - [47] 1000000116
+[2024-08-15 01:00:47] - CrawlingLog - INFO - [47] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:00:50] - CrawlingLog - INFO - [48]products
+[2024-08-15 01:00:53] - CrawlingLog - INFO - [49]products
+[2024-08-15 01:00:55] - CrawlingLog - INFO - [50]products
+[2024-08-15 01:00:55] - CrawlingLog - INFO - >>> 크롤링 진행중 50건
+[2024-08-15 01:00:58] - CrawlingLog - INFO - [51]products
+[2024-08-15 01:01:01] - CrawlingLog - INFO - [52]products
+[2024-08-15 01:01:04] - CrawlingLog - INFO - [53]products
+[2024-08-15 01:01:07] - CrawlingLog - INFO - [54]products
+[2024-08-15 01:01:10] - CrawlingLog - INFO - [55]products
+[2024-08-15 01:01:12] - CrawlingLog - INFO - [56]products
+[2024-08-15 01:01:16] - CrawlingLog - INFO - [57]products
+[2024-08-15 01:01:19] - CrawlingLog - INFO - [58]products
+[2024-08-15 01:01:21] - CrawlingLog - INFO - [59]products
+[2024-08-15 01:01:25] - CrawlingLog - INFO - [60]products
+[2024-08-15 01:01:25] - CrawlingLog - INFO - >>> 크롤링 진행중 60건
+[2024-08-15 01:01:28] - CrawlingLog - INFO - [61]products
+[2024-08-15 01:01:40] - CrawlingLog - INFO - [62] 1000000175
+[2024-08-15 01:01:40] - CrawlingLog - INFO - [62] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:01:43] - CrawlingLog - INFO - [63]products
+[2024-08-15 01:01:46] - CrawlingLog - INFO - [64]products
+[2024-08-15 01:01:49] - CrawlingLog - INFO - [65]products
+[2024-08-15 01:01:52] - CrawlingLog - INFO - [66]products
+[2024-08-15 01:02:05] - CrawlingLog - INFO - [67] 1000000195
+[2024-08-15 01:02:05] - CrawlingLog - INFO - [67] Error processing item: Message: no such element: Unable to locate element: {"method":"xpath","selector":".//li[span[contains(text(),'종류')]]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:02:08] - CrawlingLog - INFO - [68]products
+[2024-08-15 01:02:11] - CrawlingLog - INFO - [69]products
+[2024-08-15 01:02:14] - CrawlingLog - INFO - [70]products
+[2024-08-15 01:02:14] - CrawlingLog - INFO - >>> 크롤링 진행중 70건
+[2024-08-15 01:02:17] - CrawlingLog - INFO - [71]products
+[2024-08-15 01:02:20] - CrawlingLog - INFO - [72]products
+[2024-08-15 01:02:22] - CrawlingLog - INFO - [73]products
+[2024-08-15 01:02:25] - CrawlingLog - INFO - [74]products
+[2024-08-15 01:02:28] - CrawlingLog - INFO - [75]products
+[2024-08-15 01:02:31] - CrawlingLog - INFO - [76]products
+[2024-08-15 01:02:44] - CrawlingLog - INFO - [77] 1000000188
+[2024-08-15 01:02:44] - CrawlingLog - INFO - [77] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:02:47] - CrawlingLog - INFO - [78]products
+[2024-08-15 01:02:49] - CrawlingLog - INFO - [79]products
+[2024-08-15 01:02:52] - CrawlingLog - INFO - [80]products
+[2024-08-15 01:02:52] - CrawlingLog - INFO - >>> 크롤링 진행중 80건
+[2024-08-15 01:02:55] - CrawlingLog - INFO - [81]products
+[2024-08-15 01:02:58] - CrawlingLog - INFO - [82]products
+[2024-08-15 01:03:00] - CrawlingLog - INFO - [83]products
+[2024-08-15 01:03:03] - CrawlingLog - INFO - [84]products
+[2024-08-15 01:03:06] - CrawlingLog - INFO - [85]products
+[2024-08-15 01:03:09] - CrawlingLog - INFO - [86]products
+[2024-08-15 01:03:12] - CrawlingLog - INFO - [87]products
+[2024-08-15 01:03:14] - CrawlingLog - INFO - [88]products
+[2024-08-15 01:03:27] - CrawlingLog - INFO - [89] 1000000169
+[2024-08-15 01:03:27] - CrawlingLog - INFO - [89] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:03:30] - CrawlingLog - INFO - [90]products
+[2024-08-15 01:03:30] - CrawlingLog - INFO - >>> 크롤링 진행중 90건
+[2024-08-15 01:03:33] - CrawlingLog - INFO - [91]products
+[2024-08-15 01:03:35] - CrawlingLog - INFO - [92]products
+[2024-08-15 01:03:37] - CrawlingLog - INFO - [93]products
+[2024-08-15 01:03:40] - CrawlingLog - INFO - [94]products
+[2024-08-15 01:03:43] - CrawlingLog - INFO - [95]products
+[2024-08-15 01:03:45] - CrawlingLog - INFO - [96]products
+[2024-08-15 01:03:57] - CrawlingLog - INFO - [97] 1000000412
+[2024-08-15 01:03:57] - CrawlingLog - INFO - [97] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:04:10] - CrawlingLog - INFO - [98] 1000000412
+[2024-08-15 01:04:10] - CrawlingLog - INFO - [98] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:04:13] - CrawlingLog - INFO - [99]products
+[2024-08-15 01:04:15] - CrawlingLog - INFO - [100]products
+[2024-08-15 01:04:15] - CrawlingLog - INFO - >>> 크롤링 진행중 100건
+[2024-08-15 01:04:28] - CrawlingLog - INFO - [101] 1000002155
+[2024-08-15 01:04:28] - CrawlingLog - INFO - [101] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:04:30] - CrawlingLog - INFO - [102]products
+[2024-08-15 01:04:33] - CrawlingLog - INFO - [103]products
+[2024-08-15 01:04:46] - CrawlingLog - INFO - [104] 1000003993
+[2024-08-15 01:04:46] - CrawlingLog - INFO - [104] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:04:58] - CrawlingLog - INFO - [105] 1000003993
+[2024-08-15 01:04:58] - CrawlingLog - INFO - [105] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:05:01] - CrawlingLog - INFO - [106]products
+[2024-08-15 01:05:04] - CrawlingLog - INFO - [107]products
+[2024-08-15 01:05:06] - CrawlingLog - INFO - [108]products
+[2024-08-15 01:05:09] - CrawlingLog - INFO - [109]products
+[2024-08-15 01:05:12] - CrawlingLog - INFO - [110]products
+[2024-08-15 01:05:12] - CrawlingLog - INFO - >>> 크롤링 진행중 110건
+[2024-08-15 01:05:15] - CrawlingLog - INFO - [111]products
+[2024-08-15 01:05:17] - CrawlingLog - INFO - [112]products
+[2024-08-15 01:05:20] - CrawlingLog - INFO - [113]products
+[2024-08-15 01:05:23] - CrawlingLog - INFO - [114]products
+[2024-08-15 01:05:26] - CrawlingLog - INFO - [115]products
+[2024-08-15 01:05:28] - CrawlingLog - INFO - [116]products
+[2024-08-15 01:05:32] - CrawlingLog - INFO - [117]products
+[2024-08-15 01:05:34] - CrawlingLog - INFO - [118]products
+[2024-08-15 01:05:37] - CrawlingLog - INFO - [119]products
+[2024-08-15 01:05:41] - CrawlingLog - INFO - [120]products
+[2024-08-15 01:05:41] - CrawlingLog - INFO - >>> 크롤링 진행중 120건
+[2024-08-15 01:05:44] - CrawlingLog - INFO - [121]products
+[2024-08-15 01:05:47] - CrawlingLog - INFO - [122]products
+[2024-08-15 01:05:50] - CrawlingLog - INFO - [123]products
+[2024-08-15 01:05:52] - CrawlingLog - INFO - [124]products
+[2024-08-15 01:05:55] - CrawlingLog - INFO - [125]products
+[2024-08-15 01:05:58] - CrawlingLog - INFO - [126]products
+[2024-08-15 01:06:02] - CrawlingLog - INFO - [127]products
+[2024-08-15 01:06:04] - CrawlingLog - INFO - [128]products
+[2024-08-15 01:06:08] - CrawlingLog - INFO - [129]products
+[2024-08-15 01:06:10] - CrawlingLog - INFO - [130]products
+[2024-08-15 01:06:10] - CrawlingLog - INFO - >>> 크롤링 진행중 130건
+[2024-08-15 01:06:14] - CrawlingLog - INFO - [131]products
+[2024-08-15 01:06:16] - CrawlingLog - INFO - [132]products
+[2024-08-15 01:06:19] - CrawlingLog - INFO - [133]products
+[2024-08-15 01:06:22] - CrawlingLog - INFO - [134]products
+[2024-08-15 01:06:25] - CrawlingLog - INFO - [135]products
+[2024-08-15 01:06:27] - CrawlingLog - INFO - [136]products
+[2024-08-15 01:06:30] - CrawlingLog - INFO - [137]products
+[2024-08-15 01:06:33] - CrawlingLog - INFO - [138]products
+[2024-08-15 01:06:36] - CrawlingLog - INFO - [139]products
+[2024-08-15 01:06:39] - CrawlingLog - INFO - [140]products
+[2024-08-15 01:06:39] - CrawlingLog - INFO - >>> 크롤링 진행중 140건
+[2024-08-15 01:06:42] - CrawlingLog - INFO - [141]products
+[2024-08-15 01:06:44] - CrawlingLog - INFO - [142]products
+[2024-08-15 01:06:47] - CrawlingLog - INFO - [143]products
+[2024-08-15 01:06:49] - CrawlingLog - INFO - [144]products
+[2024-08-15 01:06:52] - CrawlingLog - INFO - [145]products
+[2024-08-15 01:07:05] - CrawlingLog - INFO - [146] 1000002347
+[2024-08-15 01:07:05] - CrawlingLog - INFO - [146] Error processing item: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="md-s-comment"]"}
+  (Session info: chrome-headless-shell=127.0.6533.119); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF68FA79632+30946]
+	(No symbol) [0x00007FF68FA2E3C9]
+	(No symbol) [0x00007FF68F926FDA]
+	(No symbol) [0x00007FF68F97822C]
+	(No symbol) [0x00007FF68F97850C]
+	(No symbol) [0x00007FF68F9BDCB7]
+	(No symbol) [0x00007FF68F99CAAF]
+	(No symbol) [0x00007FF68F9BB041]
+	(No symbol) [0x00007FF68F99C813]
+	(No symbol) [0x00007FF68F96A6E5]
+	(No symbol) [0x00007FF68F96B021]
+	GetHandleVerifier [0x00007FF68FBAF83D+1301229]
+	GetHandleVerifier [0x00007FF68FBBBDB7+1351783]
+	GetHandleVerifier [0x00007FF68FBB2A03+1313971]
+	GetHandleVerifier [0x00007FF68FAADD06+245686]
+	(No symbol) [0x00007FF68FA3758F]
+	(No symbol) [0x00007FF68FA33804]
+	(No symbol) [0x00007FF68FA33992]
+	(No symbol) [0x00007FF68FA2A3EF]
+	BaseThreadInitThunk [0x00007FFCC9AA257D+29]
+	RtlUserThreadStart [0x00007FFCCA78AF28+40]
+
+[2024-08-15 01:07:08] - CrawlingLog - INFO - [147]products
+[2024-08-15 01:07:10] - CrawlingLog - INFO - [148]products
+[2024-08-15 01:07:13] - CrawlingLog - INFO - [149]products
+[2024-08-15 01:07:16] - CrawlingLog - INFO - [150]products
+[2024-08-15 01:07:16] - CrawlingLog - INFO - >>> 크롤링 진행중 150건
+[2024-08-15 01:07:19] - CrawlingLog - INFO - [151]products
+[2024-08-15 01:07:22] - CrawlingLog - INFO - [152]products
+[2024-08-15 01:07:24] - CrawlingLog - INFO - [153]products
+[2024-08-15 01:07:27] - CrawlingLog - INFO - [154]products
+[2024-08-15 01:07:30] - CrawlingLog - INFO - [155]products
+[2024-08-15 01:07:32] - CrawlingLog - INFO - [156]products
+[2024-08-15 01:07:35] - CrawlingLog - INFO - [157]products
+[2024-08-15 01:07:37] - CrawlingLog - INFO - [158]products
+[2024-08-15 01:07:41] - CrawlingLog - INFO - [159]products
+[2024-08-15 01:07:44] - CrawlingLog - INFO - [160]products
+[2024-08-15 01:07:44] - CrawlingLog - INFO - >>> 크롤링 진행중 160건
+[2024-08-15 01:07:47] - CrawlingLog - INFO - [161]products
+[2024-08-15 01:07:49] - CrawlingLog - INFO - [162]products
+[2024-08-15 01:07:52] - CrawlingLog - INFO - [163]products
+[2024-08-15 01:07:54] - CrawlingLog - INFO - [164]products
+[2024-08-15 01:07:57] - CrawlingLog - INFO - [165]products
+[2024-08-15 01:08:00] - CrawlingLog - INFO - [166]products
+[2024-08-15 01:08:02] - CrawlingLog - INFO - [167]products
+[2024-08-15 01:08:05] - CrawlingLog - INFO - [168]products
+[2024-08-15 01:08:07] - CrawlingLog - INFO - [169]products
+[2024-08-15 01:08:10] - CrawlingLog - INFO - [170]products
+[2024-08-15 01:08:10] - CrawlingLog - INFO - >>> 크롤링 진행중 170건
+[2024-08-15 01:08:12] - CrawlingLog - INFO - [171]products
+[2024-08-15 01:08:15] - CrawlingLog - INFO - [172]products
+[2024-08-15 01:08:17] - CrawlingLog - INFO - [173]products
+[2024-08-15 01:08:20] - CrawlingLog - INFO - [174]products
+[2024-08-15 01:08:23] - CrawlingLog - INFO - [175]products
+[2024-08-15 01:08:25] - CrawlingLog - INFO - [176]products
+[2024-08-15 01:08:28] - CrawlingLog - INFO - [177]products
+[2024-08-15 01:08:31] - CrawlingLog - INFO - [178]products
+[2024-08-15 01:08:33] - CrawlingLog - INFO - [179]products
+[2024-08-15 01:08:36] - CrawlingLog - INFO - [180]products
+[2024-08-15 01:08:36] - CrawlingLog - INFO - >>> 크롤링 진행중 180건
+[2024-08-15 01:08:39] - CrawlingLog - INFO - [181]products
+[2024-08-15 01:08:41] - CrawlingLog - INFO - [182]products
+[2024-08-15 01:08:44] - CrawlingLog - INFO - [183]products
+[2024-08-15 01:08:46] - CrawlingLog - INFO - [184]products
+[2024-08-15 01:08:49] - CrawlingLog - INFO - [185]products
+[2024-08-15 01:08:51] - CrawlingLog - INFO - [186]products
+[2024-08-15 01:08:54] - CrawlingLog - INFO - [187]products
+[2024-08-15 01:08:56] - CrawlingLog - INFO - [188]products
+[2024-08-15 01:08:59] - CrawlingLog - INFO - [189]products
+[2024-08-15 01:09:01] - CrawlingLog - INFO - [190]products
+[2024-08-15 01:09:01] - CrawlingLog - INFO - >>> 크롤링 진행중 190건
+[2024-08-15 01:09:04] - CrawlingLog - INFO - [191]products
+[2024-08-15 01:09:07] - CrawlingLog - INFO - [192]products
+[2024-08-15 01:09:09] - CrawlingLog - INFO - [193]products
+[2024-08-15 01:09:12] - CrawlingLog - INFO - [194]products
+[2024-08-15 01:09:14] - CrawlingLog - INFO - [195]products
+[2024-08-15 01:09:17] - CrawlingLog - INFO - [196]products
+[2024-08-15 01:09:20] - CrawlingLog - INFO - [197]products
+[2024-08-15 01:09:23] - CrawlingLog - INFO - [198]products

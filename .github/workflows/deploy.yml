@@ -20,5 +20,5 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          cd /home/ec2-user/dev/crawling-test
+          cd /home/ec2-user/bottle-talk/crawling_test
           ./pull.sh

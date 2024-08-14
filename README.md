@@ -21,18 +21,27 @@ python kihay.py
 deactivate
 ```
 
-## security.json 작성
+## config.yml 작성
 ```shell
-"es" : {
-    "es_url": "",
-    "username": "",
-    "password": ""
-}
-"slack" : {
-    "url" : "",
-    "chnnel" : ""
-},
-"kihay": {
-    "url" : ""
-}
+es:
+  es_url: "http://:9200/"
+  username: ""
+  password: ""
+  main_index: ""
+  fail_index: ""
+
+slack:
+  url: ""
+  channel: ""
+
+kihay:
+  url: ""
+
+logpath:
+  ec2: ""
+  local: ""
+
+driverpach:
+  ec2: ""
+  local: ""
 ```
