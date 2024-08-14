@@ -1,3 +1,6 @@
+### bt-crawling-service
+가상환경 Virtualenv 사용해 파이썬 스크립트실행, 크롤링작업
+
 ## 파이썬 실행환경설정
 ```shell
 # 가상환경 생성
