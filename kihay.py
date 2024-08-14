@@ -12,6 +12,7 @@ from elasticsearch.exceptions import NotFoundError
 import time
 import re
 import schedule
+import platform
 
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -20,8 +21,35 @@ from elasticsearch.helpers import bulk
 log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='[%Y-%m-%d %H:%M:%S]')
 c_log = logging.getLogger(name='CrawlingLog')
 c_log.setLevel(logging.INFO)
+
+# security.json 파일열기
+with open('security.json', 'r') as security:
+    config = json.load(security)
+
+slack_config = config['slack']
+# Elasticsearch 설정
+es_config = config['es']
+es = Elasticsearch(
+    [es_config['es_url']],
+    http_auth=(es_config['username'], es_config['password'])
+)
+
+logpath = config['logpath']
+driver_path = config['driverpach']
+
 # 파일핸들러
-logfile_handler = logging.FileHandler("./logs/crawling_kihay.log", encoding='utf-8')
+osName = platform.system()
+logfile_handler = ""
+service = ""
+if osName == "Linux" :
+    logfile_handler = logging.FileHandler(
+        f"{logpath['ec2']}/crawling.log", encoding='utf-8')
+    service = Service(driver_path['ec2'])
+else:
+    logfile_handler = logging.FileHandler(
+        f"{logpath['local']}/crawling.log", encoding='utf-8')
+    service = Service(driver_path['local'])
+
 logfile_handler.setFormatter(log_formatter)
 c_log.addHandler(logfile_handler)
 # 콘솔 핸들러
@@ -33,16 +61,9 @@ c_log.addHandler(console_handler)
 wdm_logger = logging.getLogger("WDM")
 wdm_logger.setLevel(logging.WARNING)  # WARNING 이상의 로그만 출력
 
-# security.json 파일열기
-with open('security.json', 'r') as security:
-    config = json.load(security)
+
     
-# Elasticsearch 설정
-es_config = config['es']
-es = Elasticsearch(
-    [es_config['es_url']],
-    http_auth=(es_config['username'], es_config['password'])
-)
+
 
 ##### 브라우저설정
 options = Options()
@@ -53,14 +74,7 @@ options.add_argument("--single-process")
 options.add_experimental_option(
     'excludeSwitches', ['enable-logging'])  
 
-# 로컬환경
-# service = Service('C:/Users/tiq00/.wdm/drivers/chromedriver/win64/chromedriver-win64/chromedriver.exe')
-# ec2 경로지정
-service = Service('/usr/local/bin/chromedriver')
-
 headers = {'Content-Type': 'application/json'}
-slack_config = config['slack']
-
 
 
 ########## 크롤링 ##########
@@ -74,7 +88,6 @@ def crawling_main():
     slack(noti)
     
     try:    
-        
         # 크롤링할 URL
         kihay = config["kihay"]
         
@@ -84,7 +97,7 @@ def crawling_main():
         driver.get(kihay["url"])
         c_log.info(">>>>>>> driver") #테스트
 
-        moreBtn()
+        moreBtn(driver)
 
         # 가져올 데이터 상위태그
         items = driver.find_elements(By.CSS_SELECTOR, 'div.img_box')
@@ -366,8 +379,7 @@ def slack(noti):
 
 
 ########## 더보기버튼처리 ##########
-def moreBtn():
-    driver = webdriver.Chrome(service=service, options=options)
+def moreBtn(driver):
     while True:
         try:
             more_button = driver.find_element(
@@ -391,15 +403,13 @@ def main():
     crawling_main()  # 테스트
     
     # # 매일 at()시에 do(job)함수 실행
-    # schedule.every().day.at("14:00").do(crawling_main)
-    # schedule.every().day.at("15:00").do(crawling_retry)
+    schedule.every().day.at("14:00").do(crawling_main)
+    schedule.every().day.at("18:00").do(crawling_retry)
 
-    # # while 무슨기능인지 알아보기
-    # # 빠지면 어떻게 동작하는지 알아보기
-    # while True:
-    #     # 스케줄러에 등록된작업실행
-    #     schedule.run_pending()
-    #     time.sleep(1)
+    while True:
+        # 스케줄러에 등록된작업실행
+        schedule.run_pending()
+        time.sleep(5)
 
 if __name__ == "__main__":
     main()
