@@ -22,7 +22,6 @@ from elasticsearch.helpers import bulk
 class Crawler:
 
     def __init__(self):
-        print("init()")
         self.logpath = {}
         self.driver_path = {}
         self.slack_config = {}
@@ -34,8 +33,7 @@ class Crawler:
         self.setup()
 
     def setup(self):
-        self.log_formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='[%Y-%m-%d %H:%M:%S]')
+        self.log_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='[%Y-%m-%d %H:%M:%S]')
         self.c_log = logging.getLogger(name='CrawlingLog')
         self.c_log.setLevel(logging.INFO)
         self.wdm_logger = logging.getLogger("WDM")
@@ -80,6 +78,7 @@ class Crawler:
             options.add_argument('--headless')
             options.add_argument("--single-process")
             options.add_experimental_option('excludeSwitches', ['enable-logging'])
+            options.add_argument("--log-level=2")
 
             driver = webdriver.Chrome(service=self.service, options=options)
             driver.implicitly_wait(10)
@@ -134,24 +133,16 @@ class Crawler:
                     en_name = en_name_element.text.strip() if en_name_element else 'No en_name'
                     price = price_element.text.strip() if price_element else 0
                     img_src = img_element.get_attribute('src') if img_element else 'No image'
-                    category = categori_element.text.replace(
-                        '종류', '') if categori_element else 'No category'
+                    category = categori_element.text.replace('종류', '') if categori_element else 'No category'
 
                     if "위스키" in category.lower():
-                        alcohol = alcohol_element.text.replace(
-                            '도수', '') if alcohol_element else 'No alcohol'
-                        country = country_element.text.replace(
-                            '국가', '') if country_element else 'No country'
-                        capacity = capacity_element.text.replace(
-                            '용량', '') if capacity_element else 'No capacity'
-                        description = h2_element.text.replace("'MD's Comment", '') + " " + \
-                            p_element.text.strip() if h2_element and p_element else 'No description'
-                        aroma = aroma_element.text.replace(
-                            'Aroma', '') if aroma_element else 'No aroma'
-                        taste = taste_element.text.replace(
-                            'Taste', '') if taste_element else 'No taste'
-                        finish = finish_element.text.replace(
-                            'Finish', '') if finish_element else 'No finish'
+                        alcohol = alcohol_element.text.replace('도수', '') if alcohol_element else 'No alcohol'
+                        country = country_element.text.replace('국가', '') if country_element else 'No country'
+                        capacity = capacity_element.text.replace('용량', '') if capacity_element else 'No capacity'
+                        description = h2_element.text.replace("'MD's Comment", '') + p_element.text.strip() if h2_element and p_element else 'No description'
+                        aroma = aroma_element.text.replace('Aroma', '') if aroma_element else 'No aroma'
+                        taste = taste_element.text.replace('Taste', '') if taste_element else 'No taste'
+                        finish = finish_element.text.replace('Finish', '') if finish_element else 'No finish'
 
                     # url로 id 얻어오기
                     parsed_url = urllib.parse.urlparse(url)
@@ -176,27 +167,27 @@ class Crawler:
                             "aroma": aroma,
                             "taste": taste,
                             "finish": finish
-                        }
+                        },
+                        "timestamp": time.asctime()
                     }
                     products.append({
                         "_index": self.es_config['main_index'],
                         "_id": products_id,
                         "_source": product
                     })
-                    self.c_log.info(f"[{i}]products")
 
-                    # 10건당 크롤링 데이터적재알림
-                    if i != 0 and i % 10 == 0:
-                        self.c_log.info(f">>> 크롤링 진행중 {i}건")
-                        self.noti_slack(f"크롤링 진행중 {i}건")
+                    # 30건당 크롤링 데이터적재알림
+                    if i != 0 and (i+1) % 30 == 0:
+                        self.c_log.info(f">>> 크롤링 진행중 {i+1}건")
+                        self.noti_slack(f"크롤링 진행중 {i+1}건")
 
                 except Exception as e:
-                    self.c_log.info(f"[{i}] {products_id}")
-                    self.c_log.info(f"[{i}] Error processing item: {e}")
+                    self.c_log.info(f"[{i}] {products_id}:\n{e}")
                     error_id.append({
                         "_index": "none_element",
                         "_id": products_id
                     })
+                    self.noti_slack(products_id+ " >> 요소찾기 실패 수동업데이트 필요")
             driver.quit()
         except Exception as e:
             self.c_log.info(f"Failed to set up WebDriver: {e}")
@@ -229,12 +220,12 @@ class Crawler:
             self.c_log.error(f"An unexpected error occurred: {e}")
             self.noti_slack(f"Error 크롤링 중단\n{e}")
 
-        self.c_log.info(">>> 크롤링 완료 ")
+        self.c_log.info(">>> 크롤링 완료")
         self.noti_slack(f"{time.asctime()}\n크롤링 완료")
 
 
     def crawling_retry(self):
-        self.c_log.info(">>> 실패데이터")
+        self.c_log.info(">>> 실패 데이터")
         self.noti_slack(f"{time.asctime()}\n실패데이터 재적재")
 
         try:
@@ -326,23 +317,23 @@ class Crawler:
     def slack(self, noti):
         response = requests.post(self.slack_config['url'], headers=self.headers, json=noti)
         if response.status_code != 200:
-            self.c_log.info(f"Failed to send Slack notification. Status code: {
-                        response.status_code}, Response: {response.text}")
+            self.c_log.info(f"Failed to send Slack notification. Status code: {response.status_code}, Response: {response.text}")
         else:
             self.c_log.info(
                 f"Slack notification sent successfully. Response: {response.text}")
             
     def moreBtn(self, driver):
+        self.c_log.info("더보기버튼 실행")
         while True:
             try:
-                more_button = driver.find_element(
-                    By.CSS_SELECTOR, 'button.more_btn')
+                more_button = driver.find_element(By.CSS_SELECTOR, 'button.more_btn')
                 if more_button:
                     driver.execute_script("arguments[0].click();", more_button)
                     time.sleep(2)
                 else:
                     break
             except Exception as e:
+                self.c_log.info(f"더보기에러: {e}")
                 try:
                     alert = Alert(driver)
                     alert.accept()
@@ -351,14 +342,11 @@ class Crawler:
 
 
     def main(self):
-        print("main()")
         self.c_log.info("===== START main() =====")
 
-        self.crawling_main()  # 테스트
-
         # # 매일 at()시에 do(job)함수 실행
-        schedule.every().day.at("14:00").do(self.crawling_main)
-        schedule.every().day.at("18:00").do(self.crawling_retry)
+        schedule.every().day.at("18:30").do(self.crawling_main)
+        schedule.every().day.at("20:00").do(self.crawling_retry)
 
         while True:
             # 스케줄러에 등록된작업실행
