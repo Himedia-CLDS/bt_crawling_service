@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - test
+      - deploy
 
 jobs:
   deploy:
@@ -20,5 +20,5 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          cd /home/ec2-user/bottle-talk/crawling_test
+          cd /home/ec2-user/bt-crawling-service
           ./pull.sh
