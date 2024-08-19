@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - deploy
+      - develop
 
 jobs:
   deploy:
@@ -22,4 +22,10 @@ jobs:
         script: |
           mkdir -p /home/ec2-user/bt-crawling-service
           cd /home/ec2-user/bt-crawling-service
+          if [ ! -f pull.sh ]; then
+            echo '#!/bin/bash' > pull.sh
+            echo 'cd /home/ec2-user/bt-crawling-service' >> pull.sh
+            echo 'git pull origin develop' >> pull.sh
+            chmod +x pull.sh
+          fi
           ./pull.sh
