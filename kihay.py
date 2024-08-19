@@ -175,7 +175,6 @@ class Crawler:
                         "_source": product
                     })
 
-                    # 30건당 크롤링 데이터적재알림
                     if i != 0 and (i+1) % 30 == 0:
                         self.c_log.info(f">>> 크롤링 진행중 {i+1}건")
                         self.noti_slack(f"크롤링 진행중 {i+1}건")
