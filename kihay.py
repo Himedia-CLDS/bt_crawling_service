@@ -1,6 +1,5 @@
 import requests
 import logging
-import json
 import urllib.parse
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
@@ -14,6 +13,7 @@ import re
 import schedule
 import platform
 import yaml
+import os
 
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -46,6 +46,8 @@ class Crawler:
         logfile_handler.setFormatter(self.log_formatter)
         self.service = Service(self.driver_path[os_name])
         
+        if not os.path.exists(self.logpath["ec2"]):
+            os.makedirs(self.logpath["ec2"])
 
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(self.log_formatter)
