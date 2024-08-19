@@ -46,9 +46,10 @@ class Crawler:
         logfile_handler.setFormatter(self.log_formatter)
         self.service = Service(self.driver_path[os_name])
         
-        if not os.path.exists(self.logpath["ec2"]):
-            os.makedirs(self.logpath["ec2"])
-
+        log_directory = self.logpath.get(os_name, os.path.expanduser('~/crawling-log'))
+        if not os.path.exists(log_directory):
+            os.makedirs(log_directory)
+        
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(self.log_formatter)
         self.c_log.addHandler(console_handler)
