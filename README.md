@@ -2,6 +2,12 @@
 가상환경 Virtualenv 사용해 파이썬 스크립트실행, 크롤링작업
 
 ## 파이썬 실행환경설정
+# ssl설정
+```
+cd 파이썬 디렉토리
+sudo ./configure --with-openssl=/usr/local/ssl
+sudo make altinstall
+```
 ```shell
 # 가상환경 생성
 python -m pip install --no-user virtualenv
