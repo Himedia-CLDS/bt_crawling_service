@@ -149,7 +149,6 @@ class Crawler:
                     params = urllib.parse.parse_qs(parsed_url.query)
                     products_id = params.get('goodsNo', ['No goodsNo'])[0]
 
-                    # 가격 int형 변환
                     price = int(re.sub(r'[^0-9]', '', price))
 
                     product = {
@@ -344,12 +343,10 @@ class Crawler:
     def main(self):
         self.c_log.info("===== START main() =====")
 
-        # # 매일 at()시에 do(job)함수 실행
         schedule.every().day.at("18:30").do(self.crawling_main)
         schedule.every().day.at("20:00").do(self.crawling_retry)
 
         while True:
-            # 스케줄러에 등록된작업실행
             schedule.run_pending()
             time.sleep(5)
 
